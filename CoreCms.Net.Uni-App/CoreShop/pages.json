@@ -8,6 +8,17 @@
     // "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
   },
   "pages": [
+	  {
+	    "path": "pages/kuaidi/info/info",
+	    "style": {
+	      "navigationBarTextStyle": "white",
+	      "navigationBarTitleText": "首页1",
+	      // #ifdef H5
+	      "titleNView": false,
+	      // #endif
+	      "enablePullDownRefresh": true
+	    }
+	  },
     {
       "path": "pages/index/default/default",
       "style": {
@@ -267,6 +278,13 @@
       "root": "pages/activity",
       "name": "template",
       "pages": [
+		  // {
+		  //   "path": "kuaidi/info/info",
+		  //   "style": {
+		  //     "navigationBarTextStyle": "black",
+		  //     "navigationBarTitleText": "快递收取"
+		  //   }
+		  // },
         {
           "path": "pinTuan/list/list",
           "style": {
@@ -315,6 +333,13 @@
       "root": "pages/member",
       "name": "member",
       "pages": [
+		  {
+			"path": "qiandao/index",
+			"style": {
+			  "navigationBarTextStyle": "black",
+			  "navigationBarTitleText": "签到"
+			}
+		  },
         {
           "path": "coupon/index",
           "style": {
@@ -770,6 +795,12 @@
     "selectedColor": "#333",
     "backgroundColor": "#fff",
     "list": [
+		{
+		  "pagePath": "pages/kuaidi/info/info",
+		  "text": "首页1",
+		  "iconPath": "static/images/indexMenus/index01.png",
+		  "selectedIconPath": "static/images/indexMenus/index01_1.png"
+		},
       {
         "pagePath": "pages/index/default/default",
         "text": "首页",

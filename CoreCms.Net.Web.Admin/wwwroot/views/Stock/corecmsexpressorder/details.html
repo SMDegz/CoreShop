@@ -1,0 +1,180 @@
+<script type="text/html" template  lay-done="layui.data.done(d);">
+    <table class="layui-table layui-form" lay-filter="LAY-app-CoreCmsExpressOrder-detailsForm" id="LAY-app-CoreCmsExpressOrder-detailsForm">
+        <colgroup>
+            <col width="100">
+            <col>
+        </colgroup>
+        <tbody>
+		    
+		    <tr>
+                <td>
+                    <label for="id">主键编号</label>
+                </td>
+                <td>
+                    {{ d.params.data.id || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="expno">快递单号</label>
+                </td>
+                <td>
+                    {{ d.params.data.expno || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="expcom">快递公司</label>
+                </td>
+                <td>
+                    {{ d.params.data.expcom || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="storeid">门店编号</label>
+                </td>
+                <td>
+                    {{ d.params.data.storeid || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="storename">门店名称</label>
+                </td>
+                <td>
+                    {{ d.params.data.storename || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="explist">代拿列表</label>
+                </td>
+                <td>
+                    {{ d.params.data.explist || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="recname">收件人</label>
+                </td>
+                <td>
+                    {{ d.params.data.recname || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="rectel">联系电话</label>
+                </td>
+                <td>
+                    {{ d.params.data.rectel || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="recaddr">收货地址</label>
+                </td>
+                <td>
+                    {{ d.params.data.recaddr || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="sendtime">派件时间</label>
+                </td>
+                <td>
+                    {{ d.params.data.sendtime || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="totalpay">总金额</label>
+                </td>
+                <td>
+                    {{ d.params.data.totalpay || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="discount">优惠金额</label>
+                </td>
+                <td>
+                    {{ d.params.data.discount || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="pointuse">使用积分</label>
+                </td>
+                <td>
+                    {{ d.params.data.pointuse || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="serverid">使用服务</label>
+                </td>
+                <td>
+                    {{ d.params.data.serverid || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="serverticker">服务码</label>
+                </td>
+                <td>
+                    {{ d.params.data.serverticker || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="note">备注</label>
+                </td>
+                <td>
+                    {{ d.params.data.note || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="createtime">创建时间</label>
+                </td>
+                <td>
+                    {{ d.params.data.createtime || '' }}
+                </td>
+            </tr>
+		    
+        </tbody>
+    </table>
+</script>
+<script>
+    var debug= layui.setter.debug;
+    layui.data.done = function (d) {
+        //开启调试情况下获取接口赋值数据
+        if (debug) { console.log(d.params.data); }
+
+        layui.use(['admin', 'form', 'coreHelper'], function () {
+            var $ = layui.$
+                , setter = layui.setter
+                , admin = layui.admin
+                , coreHelper = layui.coreHelper
+                , form = layui.form;
+            form.render(null, 'LAY-app-CoreCmsExpressOrder-detailsForm');
+        });
+    };
+</script>

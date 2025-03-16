@@ -251,6 +251,7 @@
         },
         //加载执行
         onLoad: function (options) {
+			console.log(options)
             console.log("CustomBar" + this.CustomBar);
             //console.log(options);
             var where = {};

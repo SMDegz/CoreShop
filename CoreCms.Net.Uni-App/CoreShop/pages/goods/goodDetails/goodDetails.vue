@@ -555,6 +555,8 @@
                 let userToken = this.$db.get("userToken");
                 if (userToken) {
                     this.$u.api.goodsDetailByToken(data).then(res => {
+						console.log("getGoodsDetail")
+						console.log(res)
                         if (res.status == true) {
                             let info = res.data;
                             let products = res.data.product;

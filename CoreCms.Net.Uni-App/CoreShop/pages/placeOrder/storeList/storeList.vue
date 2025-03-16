@@ -7,7 +7,7 @@
             </view>
 
             <view v-if="storeList.length>0">
-                <view class="coreshop-list menu-avatar" v-for="(item, key) in storeList" :key="key" @click="selectStore(item.id, item.storeName, item.mobile, item.address)">
+                <view class="coreshop-list menu-avatar" v-for="(item, key) in storeList" :key="key" @click="selectStore(item.id, item.storeName, item.mobile, item.address,item.logoImage)">
                     <view class="coreshop-list-item  u-padding-top-20  u-padding-bottom-20">
                         <view class="coreshop-avatar lg radius" :style="[{backgroundImage:'url('+ item.logoImage +')'}]" />
                         <view class="content">
@@ -110,7 +110,7 @@
                 })
             },
             //门店选择
-            selectStore(id, name, mobile, address) {
+            selectStore(id, name, mobile, address,logoImage) {
                 let pages = getCurrentPages()
                 let pre = pages[pages.length - 2]
                 let store = {};
@@ -118,6 +118,7 @@
                 store['name'] = name;
                 store['mobile'] = mobile;
                 store['address'] = address;
+				store['logoImage'] = logoImage;
 
                 pre.$vm.store = store
 

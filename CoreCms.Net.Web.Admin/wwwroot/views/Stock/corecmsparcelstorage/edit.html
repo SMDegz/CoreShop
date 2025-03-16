@@ -1,0 +1,145 @@
+<script type="text/html" template lay-done="layui.data.sendParams(d);">
+    <div class="layui-form coreshop-form layui-form-pane" lay-filter="LAY-app-CoreCmsParcelStorage-editForm" id="LAY-app-CoreCmsParcelStorage-editForm">
+	    <input type="hidden" name="id"  value="{{d.params.data.id || '' }}" />
+	    <div class="layui-form-item">
+            <label for="id" class="layui-form-label  layui-form-required">id</label>
+            <div class="layui-input-block">
+                <input  type="number" min="0" max="999999" name="id"   lay-verType="tips" lay-verify="required|number" class="layui-input" value="{{d.params.data.id || '' }}" placeholder="请输入id" lay-reqText="请输入id并为数字"  />
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="phone_number" class="layui-form-label  layui-form-required">收件人手机号</label>
+            <div class="layui-input-block">
+                <input name="phone_number"   lay-verType="tips" lay-verify="required" class="layui-input" placeholder="请输入收件人手机号" lay-reqText="请输入收件人手机号"  value="{{d.params.data.phone_number || '' }}" />
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="store_id" class="layui-form-label  layui-form-required">所属门店/网点编号</label>
+            <div class="layui-input-block">
+                <input name="store_id"   lay-verType="tips" lay-verify="required" class="layui-input" placeholder="请输入所属门店/网点编号" lay-reqText="请输入所属门店/网点编号"  value="{{d.params.data.store_id || '' }}" />
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="tracking_number" class="layui-form-label  layui-form-required">快递单号</label>
+            <div class="layui-input-block">
+                <input name="tracking_number"   lay-verType="tips" lay-verify="required" class="layui-input" placeholder="请输入快递单号" lay-reqText="请输入快递单号"  value="{{d.params.data.tracking_number || '' }}" />
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="parcel_status" class="layui-form-label  layui-form-required">快递状态（0-待取件 1-已取件 2-异常）</label>
+            <div class="layui-input-block">
+                <input  type="number" min="0" max="999999" name="parcel_status"   lay-verType="tips" lay-verify="required|number" class="layui-input" value="{{d.params.data.parcel_status || '' }}" placeholder="请输入快递状态（0-待取件 1-已取件 2-异常）" lay-reqText="请输入快递状态（0-待取件 1-已取件 2-异常）并为数字"  />
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="storage_time" class="layui-form-label  layui-form-required">存放时间</label>
+            <div class="layui-input-block">
+                <input name="storage_time"  id="editTime-CoreCmsParcelStorage-storage_time" type="text" lay-verType="tips" lay-verify="required|datetime" class="layui-input" placeholder="请输入存放时间" lay-reqText="请输入存放时间"   value="{{d.params.data.storage_time || '' }}"/>
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="pickup_time" class="layui-form-label  layui-form-required">取件时间</label>
+            <div class="layui-input-block">
+                <input name="pickup_time"  id="editTime-CoreCmsParcelStorage-pickup_time" type="text" lay-verType="tips" lay-verify="required|datetime" class="layui-input" placeholder="请输入取件时间" lay-reqText="请输入取件时间"   value="{{d.params.data.pickup_time || '' }}"/>
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="storage_location" class="layui-form-label  layui-form-required">快递存放位置</label>
+            <div class="layui-input-block">
+                <input name="storage_location"   lay-verType="tips" lay-verify="required" class="layui-input" placeholder="请输入快递存放位置" lay-reqText="请输入快递存放位置"  value="{{d.params.data.storage_location || '' }}" />
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="operator_id" class="layui-form-label  layui-form-required">操作员ID</label>
+            <div class="layui-input-block">
+                <input name="operator_id"   lay-verType="tips" lay-verify="required" class="layui-input" placeholder="请输入操作员ID" lay-reqText="请输入操作员ID"  value="{{d.params.data.operator_id || '' }}" />
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="size_type" class="layui-form-label  layui-form-required">包裹尺寸分类（S-小件/M-中件/L-大件）</label>
+            <div class="layui-input-block">
+                <input name="size_type"   lay-verType="tips" lay-verify="required" class="layui-input" placeholder="请输入包裹尺寸分类（S-小件/M-中件/L-大件）" lay-reqText="请输入包裹尺寸分类（S-小件/M-中件/L-大件）"  value="{{d.params.data.size_type || '' }}" />
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="weight" class="layui-form-label  layui-form-required">包裹重量（单位：克）</label>
+            <div class="layui-input-block">
+                <input  type="number" min="0" max="999999" name="weight"   lay-verType="tips" lay-verify="required|number" class="layui-input" value="{{d.params.data.weight || '' }}" placeholder="请输入包裹重量（单位：克）" lay-reqText="请输入包裹重量（单位：克）并为数字"  />
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="photo_url" class="layui-form-label  layui-form-required">包裹照片URL</label>
+            <div class="layui-input-block">
+                <input name="photo_url"   lay-verType="tips" lay-verify="required" class="layui-input" placeholder="请输入包裹照片URL" lay-reqText="请输入包裹照片URL"  value="{{d.params.data.photo_url || '' }}" />
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="created_time" class="layui-form-label  layui-form-required">创建时间</label>
+            <div class="layui-input-block">
+                <input name="created_time"  id="editTime-CoreCmsParcelStorage-created_time" type="text" lay-verType="tips" lay-verify="required|datetime" class="layui-input" placeholder="请输入创建时间" lay-reqText="请输入创建时间"   value="{{d.params.data.created_time || '' }}"/>
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="updated_time" class="layui-form-label  layui-form-required">最后更新时间</label>
+            <div class="layui-input-block">
+                <input name="updated_time"  id="editTime-CoreCmsParcelStorage-updated_time" type="text" lay-verType="tips" lay-verify="required|datetime" class="layui-input" placeholder="请输入最后更新时间" lay-reqText="请输入最后更新时间"   value="{{d.params.data.updated_time || '' }}"/>
+            </div>
+        </div>
+	    
+        <div class="layui-form-item text-right core-hidden">
+            <input type="button" class="layui-btn" lay-submit lay-filter="LAY-app-CoreCmsParcelStorage-editForm-submit" id="LAY-app-CoreCmsParcelStorage-editForm-submit" value="确认编辑">
+        </div>
+    </div>
+</script>
+<script>
+    var debug= layui.setter.debug;
+    layui.data.sendParams = function (d) {
+        //开启调试情况下获取接口赋值数据
+        if (debug) { console.log(d.params.data); }
+        layui.use(['admin', 'form', 'laydate', 'upload', 'coreHelper', 'cropperImg'],
+        function () {
+            var $ = layui.$
+                , form = layui.form
+                , admin = layui.admin
+                , laydate = layui.laydate
+                , upload = layui.upload
+                , cropperImg = layui.cropperImg
+                , coreHelper = layui.coreHelper;
+        
+            laydate.render({
+                elem: '#editTime-CoreCmsParcelStorage-storage_time',
+                type: 'datetime'
+            });
+            laydate.render({
+                elem: '#editTime-CoreCmsParcelStorage-pickup_time',
+                type: 'datetime'
+            });
+            laydate.render({
+                elem: '#editTime-CoreCmsParcelStorage-created_time',
+                type: 'datetime'
+            });
+            laydate.render({
+                elem: '#editTime-CoreCmsParcelStorage-updated_time',
+                type: 'datetime'
+            });
+            form.verify({
+                
+            });
+            //重载form
+            form.render(null, 'LAY-app-CoreCmsParcelStorage-editForm');
+        })
+    };
+</script>

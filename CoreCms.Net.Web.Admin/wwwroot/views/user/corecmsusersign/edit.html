@@ -1,0 +1,77 @@
+<script type="text/html" template lay-done="layui.data.sendParams(d);">
+    <div class="layui-form coreshop-form layui-form-pane" lay-filter="LAY-app-CoreCmsUserSign-editForm" id="LAY-app-CoreCmsUserSign-editForm">
+	    <input type="hidden" name="Id"  value="{{d.params.data.Id || '' }}" />
+	    <div class="layui-form-item">
+            <label for="Id" class="layui-form-label  layui-form-required">签到记录</label>
+            <div class="layui-input-block">
+                <input  type="number" min="0" max="999999" name="id"   lay-verType="tips" lay-verify="required|number" class="layui-input" value="{{d.params.data.id || '' }}" placeholder="请输入签到记录" lay-reqText="请输入签到记录并为数字"  />
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="UserId" class="layui-form-label  layui-form-required">用户ID</label>
+            <div class="layui-input-block">
+                <input  type="number" min="0" max="999999" name="userId"   lay-verType="tips" lay-verify="required|number" class="layui-input" value="{{d.params.data.userId || '' }}" placeholder="请输入用户ID" lay-reqText="请输入用户ID并为数字"  />
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="SignDate" class="layui-form-label  layui-form-required">签到日期</label>
+            <div class="layui-input-block">
+                <input name="SignDate"   lay-verType="tips" lay-verify="required" class="layui-input" placeholder="请输入签到日期" lay-reqText="请输入签到日期"  value="{{d.params.data.signDate || '' }}" />
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="SignPoint" class="layui-form-label  layui-form-required">本次签到获得的积分</label>
+            <div class="layui-input-block">
+                <input  type="number" min="0" max="999999" name="SignPoint"   lay-verType="tips" lay-verify="required|number" class="layui-input" value="{{d.params.data.signPoint || '' }}" placeholder="请输入本次签到获得的积分" lay-reqText="请输入本次签到获得的积分并为数字"  />
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="ContinuityDays" class="layui-form-label  layui-form-required">连续签到天数</label>
+            <div class="layui-input-block">
+                <input  type="number" min="0" max="999999" name="ContinuityDays"   lay-verType="tips" lay-verify="required|number" class="layui-input" value="{{d.params.data.continuityDays || '' }}" placeholder="请输入连续签到天数" lay-reqText="请输入连续签到天数并为数字"  />
+            </div>
+        </div>
+	    
+	    <div class="layui-form-item">
+            <label for="CreateTime" class="layui-form-label  layui-form-required">记录创建时间</label>
+            <div class="layui-input-block">
+                <input name="CreateTime"  id="editTime-CoreCmsUserSign-CreateTime" type="text" lay-verType="tips" lay-verify="required|datetime" class="layui-input" placeholder="请输入记录创建时间" lay-reqText="请输入记录创建时间"   value="{{d.params.data.createTime || '' }}"/>
+            </div>
+        </div>
+	    
+        <div class="layui-form-item text-right core-hidden">
+            <input type="button" class="layui-btn" lay-submit lay-filter="LAY-app-CoreCmsUserSign-editForm-submit" id="LAY-app-CoreCmsUserSign-editForm-submit" value="确认编辑">
+        </div>
+    </div>
+</script>
+<script>
+    var debug= layui.setter.debug;
+    layui.data.sendParams = function (d) {
+        //开启调试情况下获取接口赋值数据
+        if (debug) { console.log(d.params.data); }
+        layui.use(['admin', 'form', 'laydate', 'upload', 'coreHelper', 'cropperImg'],
+        function () {
+            var $ = layui.$
+                , form = layui.form
+                , admin = layui.admin
+                , laydate = layui.laydate
+                , upload = layui.upload
+                , cropperImg = layui.cropperImg
+                , coreHelper = layui.coreHelper;
+        
+            laydate.render({
+                elem: '#editTime-CoreCmsUserSign-CreateTime',
+                type: 'datetime'
+            });
+            form.verify({
+                
+            });
+            //重载form
+            form.render(null, 'LAY-app-CoreCmsUserSign-editForm');
+        })
+    };
+</script>

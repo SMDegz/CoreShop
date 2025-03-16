@@ -314,6 +314,12 @@
                         router: '/pages/activity/groupBuying/list/list',
                         showItem: true
                     },
+					qiandao: {
+					    name: '签到',
+					    icon: 'bell',
+					    router: '/pages/member/qiandao/index',
+					    showItem: true
+					},
                 },
                 other: {
                     invite: {

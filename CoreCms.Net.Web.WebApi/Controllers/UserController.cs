@@ -2013,5 +2013,61 @@ namespace CoreCms.Net.Web.WebApi.Controllers
 
         #endregion
 
+
+
+        #region 取得第一个的快递服务核销信息
+        /// <summary>
+        /// 取得第一个的快递服务核销信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        public async Task<WebApiCallBack> GetDefaultServiceTicket([FromBody] FMPageByIntId entity)
+        {
+            var jm = new WebApiCallBack();
+            var now = DateTime.Now;
+
+            var where = PredicateBuilder.True<CoreCmsUserServicesOrder>();
+            where = where.And(p => p.userId == _user.ID);
+            where = where.And(p => p.isPay == true);
+
+            var orders = await _userServicesOrderServices.QueryPageAsync(where, p => p.payTime, OrderByType.Asc);
+
+            List<CoreCmsServices> servicesList = new List<CoreCmsServices>();
+            if (orders.Any())
+            {
+                var services = await _servicesServices.QueryAsync();
+                foreach (var item in orders)
+                {
+                    var service = services.Find(p => p.id == item.servicesId);
+                    if (service != null && service.title.Contains("快递") && service.endTime> now)
+                    {
+                        if (!string.IsNullOrEmpty(service.consumableStore) && service.consumableStore.Contains(entity.id.ToString()))
+                        {
+                            var userTicketList =  _userServicesTicketServices.QueryListByClause(p => p.serviceId == service.id && p.userId == _user.ID);
+                            var CanUserTicketList = userTicketList.Where(q => q.isVerification == false && q.status == 0);
+                            var userTicket = CanUserTicketList.FirstOrDefault();
+                            if (userTicket != null)
+                            {
+                                userTicket.allUse = userTicketList.Count();
+                                userTicket.yesUse = CanUserTicketList.Count();
+                                userTicket.noUse = userTicket.allUse - userTicket.yesUse;
+                                jm.status = true;
+                                jm.data = userTicket;
+                                return jm;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            jm.status = false;
+            jm.msg = "没有找到服务卡";
+            return jm;
+        }
+
+        #endregion
+
     }
 }

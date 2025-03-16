@@ -24,5 +24,24 @@ namespace CoreCms.Net.Model.Entities
         [Display(Name = "状态说明")]
         [SugarColumn(IsIgnore = true)]
         public string statusStr { get; set; }
+
+        /// <summary>
+        /// 全部数量
+        /// </summary>
+        [Display(Name = "全部数量")]
+        [SugarColumn(IsIgnore = true)]
+        public int allUse { get; set; }
+        /// <summary>
+        /// 已用数量
+        /// </summary>
+        [Display(Name = "已用数量")]
+        [SugarColumn(IsIgnore = true)]
+        public int noUse { get; set; }
+        /// <summary>
+        /// 可用数量
+        /// </summary>
+        [Display(Name = "可用数量")]
+        [SugarColumn(IsIgnore = true)]
+        public int yesUse { get; set; }
     }
 }

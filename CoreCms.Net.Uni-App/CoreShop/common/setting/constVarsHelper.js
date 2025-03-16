@@ -8,7 +8,7 @@
 // export const apiBaseUrl = 'https://47.113.149.254:8000';
 // export const apiBaseUrl = 'http://47.113.149.254:8001';
 // export const apiBaseUrl = 'http://localhost:2015';
-export const apiBaseUrl = 'http://192.168.113.222:2016';
+export const apiBaseUrl = 'http://192.168.1.3:2016';
 //项目静态资源请求地址，如果使用官方的静态文件地址可以直接替换为：https://files.cdn.coreshop.cn
 export const apiFilesUrl = 'https://files.cdn.coreshop.cn';
 

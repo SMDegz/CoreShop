@@ -8,7 +8,8 @@
                     <u-subsection :list="typeItems" mode="subsection" :current="typeCurrent" @change="onTypeItem" bg-color="#ffffff" active-color="#e54d42" v-if="storeSwitch == 1" style="border-radius:0;"></u-subsection>
                 </view>
                 <view class="content">
-                    <view v-show="typeCurrent === 0 || typeCurrent === 1">
+					<!-- <view v-show="typeCurrent === 0 || typeCurrent === 1"> -->
+                    <view v-show=" typeCurrent === -1">
                         <!-- 收货地址信息 -->
                         <view class="u-margin-top-20 u-margin-bottom-20 coreshop-common-view-box" v-if="userShip && userShip.id" @click="showAddressList">
                             <view class="coreshop-bg-white coreshop-card address-view">
@@ -41,7 +42,7 @@
                             </view>
                         </view>
                     </view>
-                    <view v-show="typeCurrent === 2">
+                    <view v-show="typeCurrent === 0">
                         <!-- 门店信息 -->
                         <view class="u-margin-top-20 u-margin-bottom-20 coreshop-common-view-box" v-if="store && store.id" @click="goStorelist()">
                             <view class="coreshop-bg-white coreshop-card address-view">
@@ -51,7 +52,7 @@
                                             <u-icon name="map"></u-icon>
                                         </view>
                                         <view class="content">
-                                            <view class="coreshop-text-black">
+											<view class="coreshop-text-black">
                                                 <text>{{store.name|| ''}}</text>
                                                 <text class="u-margin-left-20">{{store.mobile|| ''}}</text>
                                             </view>
@@ -75,7 +76,7 @@
                         </view>
                     </view>
                 </view>
-                <view class='u-margin-top-20 u-margin-bottom-20 coreshop-common-view-box' v-if="storeSwitch == 1 && typeCurrent === 2">
+                <view class='u-margin-top-20 u-margin-bottom-20 coreshop-common-view-box' v-if="storeSwitch == 1 && typeCurrent === 1">
                     <view class="coreshop-form-group">
                         <view class="title">姓名</view>
                         <input class='coreshop-cell-bd-input' placeholder='请输入提货人姓名' v-model="storePick.name" style="width: 100%;"></input>
@@ -242,13 +243,13 @@
         mixins: [goods, articles],
         data() {
             return {
-                typeItems: ['快递物流', '同城配送', '门店自提'],
+                typeItems: ['商家配送', '门店自提', '物流配送'],
                 typeCurrent: 0,
                 cartData: {}, // 购物车商品详情
                 products: [], // 货品信息
                 promotions: [], // 促销信息
                 userShip: {}, // 用户收货地址
-                receiptType: 1, // 订单类型 1快递物流发货订单，2同城配送，3是门店自提订单
+                receiptType: 2, // 订单类型 1快递物流发货订单，2同城配送，3是门店自提订单
                 params: {
                     ids: 0, // 传递过来的购物车id
                     areaId: 0, // 收货地址id
@@ -336,19 +337,24 @@
         methods: {
             // 切换门店
             onTypeItem(index) {
+				
                 if (this.typeCurrent !== index) {
                     this.typeCurrent = index;
                 }
-                let receiptType = 1;
+				this.submitStatus = false;
+                let receiptType = 2;
                 if (this.typeCurrent == 0) {
-                    receiptType = 1;
-                } else if (this.typeCurrent == 1) {
                     receiptType = 2;
-                } else if (this.typeCurrent == 2) {
+					this.getCartList();
+                } else if (this.typeCurrent == 1) {
                     receiptType = 3;
+					this.getCartList();
+                } else if (this.typeCurrent == 2) {
+                    receiptType = 1;
+					this.submitStatus = true;
+					this.$u.toast("宝，再给我一点时间！功能正在以光速开发中");
                 }
                 this.receiptType = receiptType;
-                this.getCartList();
             },
             // 跳转到门店列表
             goStorelist() {

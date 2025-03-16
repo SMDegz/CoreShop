@@ -769,7 +769,7 @@
             门店调用接口数据
             </summary>
         </member>
-        <member name="M:CoreCms.Net.Web.WebApi.Controllers.StoreController.#ctor(CoreCms.Net.Auth.HttpContextUser.IHttpContextUser,CoreCms.Net.IServices.ICoreCmsStoreServices,CoreCms.Net.IServices.ICoreCmsClerkServices,CoreCms.Net.IServices.ICoreCmsSettingServices,CoreCms.Net.IServices.ICoreCmsBillLadingServices,CoreCms.Net.IServices.ICoreCmsOrderServices)">
+        <member name="M:CoreCms.Net.Web.WebApi.Controllers.StoreController.#ctor(CoreCms.Net.Auth.HttpContextUser.IHttpContextUser,CoreCms.Net.IServices.ICoreCmsStoreServices,CoreCms.Net.IServices.ICoreCmsClerkServices,CoreCms.Net.IServices.ICoreCmsSettingServices,CoreCms.Net.IServices.ICoreCmsBillLadingServices,CoreCms.Net.IServices.ICoreCmsOrderServices,CoreCms.Net.IServices.ICoreCmsParcelStorageServices)">
             <summary>
             构造函数
             </summary>
@@ -849,6 +849,12 @@
         <member name="M:CoreCms.Net.Web.WebApi.Controllers.StoreController.Lading(CoreCms.Net.Model.FromBody.FMStringId)">
             <summary>
             核销订单
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.WebApi.Controllers.StoreController.UserKuaidiList(CoreCms.Net.Model.ViewModels.DTO.CoreCmsParcelStorageDto)">
+            <summary>
+            我的快递列表
             </summary>
             <returns></returns>
         </member>
@@ -1217,6 +1223,12 @@
         <member name="M:CoreCms.Net.Web.WebApi.Controllers.UserController.GetServicesTickets(CoreCms.Net.Model.FromBody.FMPageByStringId)">
             <summary>
             取得服务卡列表信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.WebApi.Controllers.UserController.GetDefaultServiceTicket(CoreCms.Net.Model.FromBody.FMPageByIntId)">
+            <summary>
+            取得第一个的快递服务核销信息
             </summary>
             <returns></returns>
         </member>

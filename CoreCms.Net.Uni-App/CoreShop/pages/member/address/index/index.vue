@@ -46,7 +46,7 @@
                     address: '',
                     isDefault: 2,
                 },
-                region: ['湖南省', '怀化市', '鹤城区'],
+                region: ['福建省', '漳州市', '芗城区'],
                 areaId: 0,
                 checked: false,
                 pickerValue: '',

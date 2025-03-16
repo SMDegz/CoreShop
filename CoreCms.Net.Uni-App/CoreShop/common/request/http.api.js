@@ -1,4 +1,4 @@
-﻿
+
 // 此处第二个参数vm，就是我们在页面使用的this，你可以通过vm获取vuex等操作，更多内容详见uView对拦截器的介绍部分：
 // https://uviewui.com/js/http.html#%E4%BD%95%E8%B0%93%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA%EF%BC%9F
 const install = (Vue, vm) => {
@@ -177,6 +177,9 @@ const install = (Vue, vm) => {
     let cashList = (params = {}) => vm.$u.post('/Api/User/CashList', params, { method: 'user.cashlist', needToken: true });
     // 判断用户下单可以使用多少积分
     let usablePoint = (params = {}) => vm.$u.post('/Api/User/GetUserPoint', params, { method: 'user.getuserpoint', needToken: true });
+	// 获取默认的服务卡
+	let getDefaultServiceTicket = (params = {}) => vm.$u.post('/Api/User/GetDefaultServiceTicket', params, { method: 'user.getdefaultserviceticket', needToken: true });
+
 
     // 门店列表
     let storeList = (params = {}) => vm.$u.post('/Api/Store/GetStoreList', params, { method: 'store.getstorelist', needToken: false });
@@ -207,6 +210,8 @@ const install = (Vue, vm) => {
     let ladingExec = (params = {}) => vm.$u.post('/Api/Store/Lading', params, { method: 'store.lading', needToken: true });
     // 提货单删除
     let ladingDel = (params = {}) => vm.$u.post('/Api/Store/LadingDelete', params, { method: 'store.ladingdel', needToken: true });
+	// 快递列表
+    let kuaidiList = (params = {}) => vm.$u.post('/Api/Store/UserKuaidiList', params, { method: 'store.ladingdel', needToken: true });
 
 
 
@@ -468,6 +473,7 @@ const install = (Vue, vm) => {
         userToCash,
         cashList,
         usablePoint,
+		getDefaultServiceTicket,
 
         storeList,
         getStoreByUserId,
@@ -480,6 +486,7 @@ const install = (Vue, vm) => {
         couponKey,
         isStoreUser,
         storeLadingList,
+		kuaidiList,
 
         ladingInfo,
         ladingExec,

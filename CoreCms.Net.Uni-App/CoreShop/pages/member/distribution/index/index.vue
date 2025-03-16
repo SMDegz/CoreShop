@@ -41,7 +41,7 @@
                 customStyle: {
                     width: '100%',
                 },
-                show: false,
+                show: true,
                 condition: {}
             }
         },
@@ -58,16 +58,18 @@
         onLoad: function () {
             var _this = this;
             _this.$u.api.getDistributionInfo().then(res => {
+				console.log('hjx')
+				console.log(res)
                 if (res.status) {
                     _this.condition = res.data;
                     if (_this.condition.hasOwnProperty('verifyStatus')) {
-                        if (_this.condition.verifyStatus == 1 || (!_this.condition.needApply && _this.conditionStatus)) {
-                            _this.$u.route({ type: 'redirectTo', url: '/pages/member/distribution/panel/panel' });
-                        } else if (_this.condition.verifyStatus > 1) {
-                            _this.$u.route({ type: 'redirectTo', url: '/pages/member/distribution/applyState/applyState' });
-                        } else {
-                            _this.show = true;
-                        }
+                        // if (_this.condition.verifyStatus == 1 || (!_this.condition.needApply && _this.conditionStatus)) {
+                        //     _this.$u.route({ type: 'redirectTo', url: '/pages/member/distribution/panel/panel' });
+                        // } else if (_this.condition.verifyStatus > 1) {
+                        //     _this.$u.route({ type: 'redirectTo', url: '/pages/member/distribution/applyState/applyState' });
+                        // } else {
+                        //     _this.show = true;
+                        // }
                     }
                 } else {
                     //报错了

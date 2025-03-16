@@ -279,7 +279,9 @@
         public const string CacheCoreCmsServiceDescription = "CacheCoreCmsServiceDescription";
         public const string CacheCoreCmsAgentGrade = "CacheCoreCmsAgentGrade";
 
-
+        public const string CacheCoreCmsUserSign = "CacheCoreCmsUserSign";  //签到表
+        public const string CacheCoreCmsParcelStorage = "CacheCoreCmsParcelStorage";  //快递表
+        public const string CacheCoreCmsExpressOrder = "CacheCoreCmsExpressOrder";  //快递配送表
     }
 
 

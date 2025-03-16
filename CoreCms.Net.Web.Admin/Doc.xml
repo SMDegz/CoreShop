@@ -3658,6 +3658,172 @@
             <param name="entity"></param>
             <returns></returns>
         </member>
+        <member name="T:CoreCms.Net.Web.Admin.Controllers.CoreCmsExpressOrderController">
+             <summary>
+             快递配送表
+            </summary>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsExpressOrderController.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment,CoreCms.Net.IServices.ICoreCmsExpressOrderServices)">
+             <summary>
+             构造函数
+            </summary>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsExpressOrderController.GetPageList">
+            <summary>
+            获取列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsExpressOrderController.GetIndex">
+            <summary>
+            首页数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsExpressOrderController.GetCreate">
+            <summary>
+            创建数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsExpressOrderController.DoCreate(CoreCms.Net.Model.Entities.CoreCmsExpressOrder)">
+            <summary>
+            创建提交
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsExpressOrderController.GetEdit(CoreCms.Net.Model.FromBody.FMIntId)">
+            <summary>
+            编辑数据
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsExpressOrderController.DoEdit(CoreCms.Net.Model.Entities.CoreCmsExpressOrder)">
+            <summary>
+            编辑提交
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsExpressOrderController.DoDelete(CoreCms.Net.Model.FromBody.FMIntId)">
+            <summary>
+            单选删除
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsExpressOrderController.DoBatchDelete(CoreCms.Net.Model.FromBody.FMArrayIntIds)">
+            <summary>
+            批量删除
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsExpressOrderController.GetDetails(CoreCms.Net.Model.FromBody.FMIntId)">
+            <summary>
+            预览数据
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsExpressOrderController.SelectExportExcel(CoreCms.Net.Model.FromBody.FMArrayIntIds)">
+            <summary>
+            选择导出
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsExpressOrderController.QueryExportExcel">
+            <summary>
+            查询导出
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:CoreCms.Net.Web.Admin.Controllers.CoreCmsParcelStorageController">
+             <summary>
+             快递信息表
+            </summary>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsParcelStorageController.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment,CoreCms.Net.IServices.ICoreCmsParcelStorageServices)">
+             <summary>
+             构造函数
+            </summary>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsParcelStorageController.GetPageList">
+            <summary>
+            获取列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsParcelStorageController.GetIndex">
+            <summary>
+            首页数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsParcelStorageController.GetCreate">
+            <summary>
+            创建数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsParcelStorageController.DoCreate(CoreCms.Net.Model.Entities.CoreCmsParcelStorage)">
+            <summary>
+            创建提交
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsParcelStorageController.GetEdit(CoreCms.Net.Model.FromBody.FMIntId)">
+            <summary>
+            编辑数据
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsParcelStorageController.DoEdit(CoreCms.Net.Model.Entities.CoreCmsParcelStorage)">
+            <summary>
+            编辑提交
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsParcelStorageController.DoDelete(CoreCms.Net.Model.FromBody.FMIntId)">
+            <summary>
+            单选删除
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsParcelStorageController.DoBatchDelete(CoreCms.Net.Model.FromBody.FMArrayIntIds)">
+            <summary>
+            批量删除
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsParcelStorageController.GetDetails(CoreCms.Net.Model.FromBody.FMIntId)">
+            <summary>
+            预览数据
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsParcelStorageController.SelectExportExcel(CoreCms.Net.Model.FromBody.FMArrayIntIds)">
+            <summary>
+            选择导出
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsParcelStorageController.QueryExportExcel">
+            <summary>
+            查询导出
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:CoreCms.Net.Web.Admin.Controllers.CoreCmsStockController">
              <summary>
              库存操作表
@@ -4786,6 +4952,89 @@
                 设置是否默认
             </summary>
             <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CoreCms.Net.Web.Admin.Controllers.CoreCmsUserSignController">
+             <summary>
+             
+            </summary>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsUserSignController.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment,CoreCms.Net.IServices.ICoreCmsUserSignServices)">
+             <summary>
+             构造函数
+            </summary>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsUserSignController.GetPageList">
+            <summary>
+            获取列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsUserSignController.GetIndex">
+            <summary>
+            首页数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsUserSignController.GetCreate">
+            <summary>
+            创建数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsUserSignController.DoCreate(CoreCms.Net.Model.Entities.CoreCmsUserSign)">
+            <summary>
+            创建提交
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsUserSignController.GetEdit(CoreCms.Net.Model.FromBody.FMIntId)">
+            <summary>
+            编辑数据
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsUserSignController.DoEdit(CoreCms.Net.Model.Entities.CoreCmsUserSign)">
+            <summary>
+            编辑提交
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsUserSignController.DoDelete(CoreCms.Net.Model.FromBody.FMIntId)">
+            <summary>
+            单选删除
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsUserSignController.DoBatchDelete(CoreCms.Net.Model.FromBody.FMArrayIntIds)">
+            <summary>
+            批量删除
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsUserSignController.GetDetails(CoreCms.Net.Model.FromBody.FMIntId)">
+            <summary>
+            预览数据
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsUserSignController.SelectExportExcel(CoreCms.Net.Model.FromBody.FMArrayIntIds)">
+            <summary>
+            选择导出
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.Admin.Controllers.CoreCmsUserSignController.QueryExportExcel">
+            <summary>
+            查询导出
+            </summary>
             <returns></returns>
         </member>
         <member name="T:CoreCms.Net.Web.Admin.Controllers.CoreCmsUserTocashController">

@@ -1,0 +1,153 @@
+<script type="text/html" template  lay-done="layui.data.done(d);">
+    <table class="layui-table layui-form" lay-filter="LAY-app-CoreCmsParcelStorage-detailsForm" id="LAY-app-CoreCmsParcelStorage-detailsForm">
+        <colgroup>
+            <col width="100">
+            <col>
+        </colgroup>
+        <tbody>
+		    
+		    <tr>
+                <td>
+                    <label for="id">id</label>
+                </td>
+                <td>
+                    {{ d.params.data.id || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="phone_number">收件人手机号</label>
+                </td>
+                <td>
+                    {{ d.params.data.phone_number || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="store_id">所属门店/网点编号</label>
+                </td>
+                <td>
+                    {{ d.params.data.store_id || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="tracking_number">快递单号</label>
+                </td>
+                <td>
+                    {{ d.params.data.tracking_number || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="parcel_status">快递状态（0-待取件 1-已取件 2-异常）</label>
+                </td>
+                <td>
+                    {{ d.params.data.parcel_status || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="storage_time">存放时间</label>
+                </td>
+                <td>
+                    {{ d.params.data.storage_time || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="pickup_time">取件时间</label>
+                </td>
+                <td>
+                    {{ d.params.data.pickup_time || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="storage_location">快递存放位置</label>
+                </td>
+                <td>
+                    {{ d.params.data.storage_location || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="operator_id">操作员ID</label>
+                </td>
+                <td>
+                    {{ d.params.data.operator_id || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="size_type">包裹尺寸分类（S-小件/M-中件/L-大件）</label>
+                </td>
+                <td>
+                    {{ d.params.data.size_type || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="weight">包裹重量（单位：克）</label>
+                </td>
+                <td>
+                    {{ d.params.data.weight || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="photo_url">包裹照片URL</label>
+                </td>
+                <td>
+                    {{ d.params.data.photo_url || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="created_time">创建时间</label>
+                </td>
+                <td>
+                    {{ d.params.data.created_time || '' }}
+                </td>
+            </tr>
+		    
+		    <tr>
+                <td>
+                    <label for="updated_time">最后更新时间</label>
+                </td>
+                <td>
+                    {{ d.params.data.updated_time || '' }}
+                </td>
+            </tr>
+		    
+        </tbody>
+    </table>
+</script>
+<script>
+    var debug= layui.setter.debug;
+    layui.data.done = function (d) {
+        //开启调试情况下获取接口赋值数据
+        if (debug) { console.log(d.params.data); }
+
+        layui.use(['admin', 'form', 'coreHelper'], function () {
+            var $ = layui.$
+                , setter = layui.setter
+                , admin = layui.admin
+                , coreHelper = layui.coreHelper
+                , form = layui.form;
+            form.render(null, 'LAY-app-CoreCmsParcelStorage-detailsForm');
+        });
+    };
+</script>

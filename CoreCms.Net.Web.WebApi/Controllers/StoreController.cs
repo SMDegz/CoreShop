@@ -43,7 +43,7 @@ namespace CoreCms.Net.Web.WebApi.Controllers
         private readonly ICoreCmsSettingServices _settingServices;
         private readonly ICoreCmsBillLadingServices _billLadingServices;
         private readonly ICoreCmsOrderServices _orderServices;
-
+        private readonly ICoreCmsParcelStorageServices _parcelStorageServices;
 
         /// <summary>
         /// 构造函数
@@ -52,7 +52,9 @@ namespace CoreCms.Net.Web.WebApi.Controllers
             , ICoreCmsStoreServices storeServices
             , ICoreCmsClerkServices clerkServices
             , ICoreCmsSettingServices settingServices
-            , ICoreCmsBillLadingServices billLadingServices, ICoreCmsOrderServices orderServices)
+            , ICoreCmsBillLadingServices billLadingServices
+            , ICoreCmsOrderServices orderServices
+            ,ICoreCmsParcelStorageServices coreCmsParcelStorageServices)
         {
             _user = user;
             _storeServices = storeServices;
@@ -60,6 +62,7 @@ namespace CoreCms.Net.Web.WebApi.Controllers
             _settingServices = settingServices;
             _billLadingServices = billLadingServices;
             _orderServices = orderServices;
+            _parcelStorageServices = coreCmsParcelStorageServices;
         }
 
         //公共接口======================================================================================================
@@ -360,6 +363,41 @@ namespace CoreCms.Net.Web.WebApi.Controllers
         }
         #endregion
 
+        #region 我的快递列表
+        /// <summary>
+        /// 我的快递列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        public async Task<WebApiCallBack> UserKuaidiList([FromBody] CoreCmsParcelStorageDto entity)
+        {
+            var jm = new WebApiCallBack();
 
+            var where = PredicateBuilder.True<CoreCmsParcelStorage>();
+            where = where.And(p => p.phone_number == entity.phone_number);
+            where = where.And(p => p.store_id == entity.store_id);
+
+
+            var data = await _parcelStorageServices.QueryPageAsync(where, p => p.created_time, OrderByType.Desc, entity.page, entity.limit);
+            if (data.Any())
+            {
+                foreach (var item in data)
+                {
+                    item.ParcelStatusName = EnumHelper.GetEnumDescriptionByValue<GlobalEnumVars.ParcelStatus>(item.parcel_status);
+                }
+            }
+            jm.status = true;
+            jm.data = data;
+            jm.otherData = new
+            {
+                data.TotalCount,
+                data.TotalPages
+            };
+            return jm;
+
+        }
+
+        #endregion
     }
 }

@@ -2628,6 +2628,54 @@ namespace CoreCms.Net.Configuration
         #region 库存
 
         /// <summary>
+        /// 快递状态枚举
+        /// </summary>
+        public enum ParcelStatus
+        {
+            /// <summary>
+            /// 待取件
+            /// </summary>
+            [Description("待取件")]
+            PendingPickup = 0,
+
+            /// <summary>
+            /// 已取件
+            /// </summary>
+            [Description("已取件")]
+            PickedUp = 1,
+
+            /// <summary>
+            /// 异常
+            /// </summary>
+            [Description("异常")]
+            Abnormal = 2
+        }
+
+        /// <summary>
+        /// 包裹尺寸分类枚举
+        /// </summary>
+        public enum ParcelSizeCategory
+        {
+            /// <summary>
+            /// 小件
+            /// </summary>
+            [Description("小件")]
+            Small = 'S',
+
+            /// <summary>
+            /// 中件
+            /// </summary>
+            [Description("中件")]
+            Medium = 'M',
+
+            /// <summary>
+            /// 大件
+            /// </summary>
+            [Description("大件")]
+            Large = 'L'
+        }
+
+        /// <summary>
         /// 库存操作单类型
         /// </summary>
         public enum StockType
