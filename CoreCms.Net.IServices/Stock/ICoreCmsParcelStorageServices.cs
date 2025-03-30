@@ -48,6 +48,13 @@ namespace CoreCms.Net.IServices
         new Task<AdminUiCallBack> UpdateAsync(List<CoreCmsParcelStorage> entity);
 
         /// <summary>
+        /// 重写异步更新方法
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        Task<AdminUiCallBack> UpdateFieldByIds(List<int> ids, Expression<Func<CoreCmsParcelStorage, object>> fieldExpression);
+
+        /// <summary>
         /// 重写删除指定ID的数据
         /// </summary>
         /// <param name="id"></param>
@@ -94,6 +101,13 @@ namespace CoreCms.Net.IServices
             Expression<Func<CoreCmsParcelStorage, bool>> predicate,
             Expression<Func<CoreCmsParcelStorage, object>> orderByExpression, OrderByType orderByType, int pageIndex = 1,
             int pageSize = 20, bool blUseNoLock = false);
+
         #endregion
+
+        /// <summary>
+        /// 获取缓存的所有数据
+        /// </summary>
+        /// <returns></returns>
+        new Task<List<CoreCmsParcelStorage>> QueryByIDsAsync(int[] lstIds, bool blUseNoLock = false);
     }
 }

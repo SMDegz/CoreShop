@@ -38,8 +38,16 @@ namespace CoreCms.Net.Model.Entities
         
         
         public System.Int32 id  { get; set; }
-        
-		
+
+
+        /// <summary>
+        /// 主键编号
+        /// </summary>
+        [Display(Name = "用户Id")]
+
+        [Required(ErrorMessage = "请输入{0}")]
+        public System.Int32 userid { get; set; }
+
         /// <summary>
         /// 快递单号
         /// </summary>
@@ -145,7 +153,7 @@ namespace CoreCms.Net.Model.Entities
         
         
         
-        public System.DateTime sendtime  { get; set; }
+        public System.String sendtime  { get; set; }
         
 		
         /// <summary>
@@ -206,8 +214,14 @@ namespace CoreCms.Net.Model.Entities
         [StringLength(maximumLength:50,ErrorMessage = "{0}不能超过{1}字")]
         
         public System.String serverticker  { get; set; }
-        
-		
+
+
+        /// <summary>
+        /// 订单状态
+        /// </summary>
+        [Display(Name = "订单状态")]
+        public System.Int32 orderstatus { get; set; }
+
         /// <summary>
         /// 备注
         /// </summary>

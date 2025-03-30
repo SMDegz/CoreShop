@@ -99,5 +99,14 @@ namespace CoreCms.Net.IRepository
             Expression<Func<CoreCmsParcelStorage, object>> orderByExpression, OrderByType orderByType, int pageIndex = 1,
             int pageSize = 20, bool blUseNoLock = false);
 
+
+        /// <summary>
+        /// 重写异步更新方法更新Ids列表
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ids"></param>
+        /// <param name="fieldExpression"></param>
+        /// <returns></returns>
+       Task<AdminUiCallBack> UpdateFieldByIds<T>(List<int> ids, Expression<Func<T, object>> fieldExpression);
     }
 }

@@ -62,8 +62,19 @@ namespace CoreCms.Net.Model.Entities
         [StringLength(maximumLength:10,ErrorMessage = "{0}不能超过{1}字")]
         
         public System.String store_id  { get; set; }
-        
-		
+
+
+        /// <summary>
+        /// 取件码
+        /// </summary>
+        [Display(Name = "取件码")]
+
+        [Required(ErrorMessage = "请输入{0}")]
+
+        [StringLength(maximumLength: 10, ErrorMessage = "{0}不能超过{1}字")]
+
+        public System.String pickupcode { get; set; }
+
         /// <summary>
         /// 快递单号
         /// </summary>

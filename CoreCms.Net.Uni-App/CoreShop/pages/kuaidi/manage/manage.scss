@@ -1,0 +1,91 @@
+// 页面整体样式
+.pageBox {
+    background-color: #f5f5f5;
+    min-height: 100vh;
+}
+
+// 搜索框样式
+.u-search {
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+// 快递信息列表样式
+.expressList {
+    background-color: #fff;
+    margin: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+
+        .left {
+            display: flex;
+            align-items: center;
+        }
+
+        .right {
+            color: #999;
+        }
+    }
+
+    .item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .content {
+            flex: 1;
+
+            .title {
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .type {
+                color: #999;
+                font-size: 14px;
+                margin-top: 5px;
+            }
+
+            .delivery-time {
+                color: #999;
+                font-size: 14px;
+                margin-top: 5px;
+            }
+        }
+
+        .right {
+            .price {
+                color: #f00;
+                font-size: 16px;
+            }
+        }
+    }
+
+    .bottom {
+        margin-top: 10px;
+
+        .more {
+            color: #999;
+        }
+    }
+}
+
+// 无数据时的提示样式
+.coreshop-emptybox {
+    padding: 50px;
+    text-align: center;
+}
+
+// 加载更多样式
+.u-loadmore {
+    margin: 20px 0;
+    text-align: center;
+}

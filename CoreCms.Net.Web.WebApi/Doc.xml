@@ -359,7 +359,7 @@
             商品相关接口处理
             </summary>
         </member>
-        <member name="M:CoreCms.Net.Web.WebApi.Controllers.GoodController.#ctor(AutoMapper.IMapper,CoreCms.Net.Auth.HttpContextUser.IHttpContextUser,CoreCms.Net.IServices.ICoreCmsSettingServices,CoreCms.Net.IServices.ICoreCmsGoodsCategoryServices,CoreCms.Net.IServices.ICoreCmsGoodsServices,CoreCms.Net.IServices.ICoreCmsProductsServices,CoreCms.Net.IServices.ICoreCmsBrandServices,CoreCms.Net.IServices.ICoreCmsOrderItemServices,CoreCms.Net.IServices.ICoreCmsGoodsCommentServices,CoreCms.Net.IServices.ICoreCmsGoodsParamsServices,CoreCms.Net.IServices.ICoreCmsGoodsCollectionServices,CoreCms.Net.IServices.ICoreCmsUserServices,CoreCms.Net.IServices.ICoreCmsGoodsCategoryExtendServices)">
+        <member name="M:CoreCms.Net.Web.WebApi.Controllers.GoodController.#ctor(AutoMapper.IMapper,CoreCms.Net.Auth.HttpContextUser.IHttpContextUser,CoreCms.Net.IServices.ICoreCmsSettingServices,CoreCms.Net.IServices.ICoreCmsGoodsCategoryServices,CoreCms.Net.IServices.ICoreCmsGoodsServices,CoreCms.Net.IServices.ICoreCmsProductsServices,CoreCms.Net.IServices.ICoreCmsBrandServices,CoreCms.Net.IServices.ICoreCmsOrderItemServices,CoreCms.Net.IServices.ICoreCmsGoodsCommentServices,CoreCms.Net.IServices.ICoreCmsGoodsParamsServices,CoreCms.Net.IServices.ICoreCmsGoodsCollectionServices,CoreCms.Net.IServices.ICoreCmsUserServices,CoreCms.Net.IServices.ICoreCmsGoodsCategoryExtendServices,CoreCms.Net.IServices.ICoreCmsCartServices)">
             <summary>
             构造函数
             </summary>
@@ -769,7 +769,7 @@
             门店调用接口数据
             </summary>
         </member>
-        <member name="M:CoreCms.Net.Web.WebApi.Controllers.StoreController.#ctor(CoreCms.Net.Auth.HttpContextUser.IHttpContextUser,CoreCms.Net.IServices.ICoreCmsStoreServices,CoreCms.Net.IServices.ICoreCmsClerkServices,CoreCms.Net.IServices.ICoreCmsSettingServices,CoreCms.Net.IServices.ICoreCmsBillLadingServices,CoreCms.Net.IServices.ICoreCmsOrderServices,CoreCms.Net.IServices.ICoreCmsParcelStorageServices)">
+        <member name="M:CoreCms.Net.Web.WebApi.Controllers.StoreController.#ctor(CoreCms.Net.Auth.HttpContextUser.IHttpContextUser,CoreCms.Net.IServices.ICoreCmsStoreServices,CoreCms.Net.IServices.ICoreCmsClerkServices,CoreCms.Net.IServices.ICoreCmsSettingServices,CoreCms.Net.IServices.ICoreCmsBillLadingServices,CoreCms.Net.IServices.ICoreCmsOrderServices,CoreCms.Net.IServices.ICoreCmsExpressOrderServices,CoreCms.Net.IServices.ICoreCmsParcelStorageServices)">
             <summary>
             构造函数
             </summary>
@@ -858,12 +858,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CoreCms.Net.Web.WebApi.Controllers.StoreController.UserKuaidiOrderList(CoreCms.Net.Model.ViewModels.DTO.CoreCmsExpressOrderDto)">
+            <summary>
+            我的快递订单列表
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:CoreCms.Net.Web.WebApi.Controllers.UserController">
             <summary>
             用户操作事件
             </summary>
         </member>
-        <member name="M:CoreCms.Net.Web.WebApi.Controllers.UserController.#ctor(CoreCms.Net.Auth.HttpContextUser.IHttpContextUser,CoreCms.Net.IServices.ICoreCmsUserWeChatInfoServices,CoreCms.Net.IServices.ICoreCmsUserServices,CoreCms.Net.Auth.Policys.PermissionRequirement,CoreCms.Net.IServices.ICoreCmsSmsServices,CoreCms.Net.IServices.ICoreCmsUserGradeServices,CoreCms.Net.IServices.ICoreCmsUserLogServices,Microsoft.AspNetCore.Http.IHttpContextAccessor,CoreCms.Net.IServices.ICoreCmsGoodsServices,CoreCms.Net.IServices.ICoreCmsGoodsBrowsingServices,CoreCms.Net.IServices.ICoreCmsCartServices,CoreCms.Net.IServices.ICoreCmsGoodsCollectionServices,CoreCms.Net.IServices.ICoreCmsUserShipServices,CoreCms.Net.IServices.ICoreCmsAreaServices,CoreCms.Net.IServices.ICoreCmsBillPaymentsServices,CoreCms.Net.IServices.ICoreCmsGoodsCommentServices,CoreCms.Net.IServices.ICoreCmsUserBankCardServices,CoreCms.Net.IServices.ICoreCmsUserTocashServices,CoreCms.Net.IServices.ICoreCmsUserBalanceServices,CoreCms.Net.IServices.ICoreCmsInvoiceServices,CoreCms.Net.IServices.ICoreCmsUserPointLogServices,CoreCms.Net.IServices.ICoreCmsShareServices,CoreCms.Net.IServices.ICoreCmsSettingServices,CoreCms.Net.IServices.ICoreCmsServicesServices,Microsoft.Extensions.Options.IOptions{CoreCms.Net.WeChat.Service.Options.WeChatOptions},CoreCms.Net.IServices.ICoreCmsUserServicesOrderServices,CoreCms.Net.IServices.ICoreCmsUserServicesTicketServices,CoreCms.Net.IServices.ICoreCmsStoreServices,CoreCms.Net.IServices.ICoreCmsCouponServices,CoreCms.Net.IServices.ICoreCmsOrderServices,CoreCms.Net.WeChat.Service.HttpClients.IWeChatApiHttpClientFactory)">
+        <member name="M:CoreCms.Net.Web.WebApi.Controllers.UserController.#ctor(CoreCms.Net.Auth.HttpContextUser.IHttpContextUser,CoreCms.Net.IServices.ICoreCmsUserWeChatInfoServices,CoreCms.Net.IServices.ICoreCmsUserServices,CoreCms.Net.Auth.Policys.PermissionRequirement,CoreCms.Net.IServices.ICoreCmsSmsServices,CoreCms.Net.IServices.ICoreCmsUserGradeServices,CoreCms.Net.IServices.ICoreCmsUserLogServices,Microsoft.AspNetCore.Http.IHttpContextAccessor,CoreCms.Net.IServices.ICoreCmsGoodsServices,CoreCms.Net.IServices.ICoreCmsGoodsBrowsingServices,CoreCms.Net.IServices.ICoreCmsCartServices,CoreCms.Net.IServices.ICoreCmsGoodsCollectionServices,CoreCms.Net.IServices.ICoreCmsUserShipServices,CoreCms.Net.IServices.ICoreCmsAreaServices,CoreCms.Net.IServices.ICoreCmsBillPaymentsServices,CoreCms.Net.IServices.ICoreCmsGoodsCommentServices,CoreCms.Net.IServices.ICoreCmsUserBankCardServices,CoreCms.Net.IServices.ICoreCmsUserTocashServices,CoreCms.Net.IServices.ICoreCmsUserBalanceServices,CoreCms.Net.IServices.ICoreCmsInvoiceServices,CoreCms.Net.IServices.ICoreCmsUserPointLogServices,CoreCms.Net.IServices.ICoreCmsShareServices,CoreCms.Net.IServices.ICoreCmsSettingServices,CoreCms.Net.IServices.ICoreCmsServicesServices,Microsoft.Extensions.Options.IOptions{CoreCms.Net.WeChat.Service.Options.WeChatOptions},CoreCms.Net.IServices.ICoreCmsExpressOrderServices,CoreCms.Net.IServices.ICoreCmsParcelStorageServices,CoreCms.Net.IServices.ICoreCmsUserServicesOrderServices,CoreCms.Net.IServices.ICoreCmsUserServicesTicketServices,CoreCms.Net.IServices.ICoreCmsStoreServices,CoreCms.Net.IServices.ICoreCmsCouponServices,CoreCms.Net.IServices.ICoreCmsOrderServices,CoreCms.Net.WeChat.Service.HttpClients.IWeChatApiHttpClientFactory)">
             <summary>
             构造函数
             </summary>
@@ -1229,6 +1235,12 @@
         <member name="M:CoreCms.Net.Web.WebApi.Controllers.UserController.GetDefaultServiceTicket(CoreCms.Net.Model.FromBody.FMPageByIntId)">
             <summary>
             取得第一个的快递服务核销信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CoreCms.Net.Web.WebApi.Controllers.UserController.AddServicesTickets(CoreCms.Net.Model.ViewModels.DTO.CoreCmsExpressOrderDto)">
+            <summary>
+            添加快递代领记录
             </summary>
             <returns></returns>
         </member>

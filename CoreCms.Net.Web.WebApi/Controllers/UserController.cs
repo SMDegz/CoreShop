@@ -45,6 +45,7 @@ using NLog;
 using SKIT.FlurlHttpClient.Wechat.Api;
 using SKIT.FlurlHttpClient.Wechat.Api.Models;
 using SqlSugar;
+using CoreCms.Net.Services;
 
 namespace CoreCms.Net.Web.WebApi.Controllers
 {
@@ -85,6 +86,8 @@ namespace CoreCms.Net.Web.WebApi.Controllers
         private readonly ICoreCmsStoreServices _storeServices;
         private readonly ICoreCmsCouponServices _couponServices;
         private readonly ICoreCmsOrderServices _orderServices;
+        private readonly ICoreCmsExpressOrderServices _coreCmsExpressOrderServices;
+        private readonly ICoreCmsParcelStorageServices _parcelStorageServices;
 
         private readonly IWeChatApiHttpClientFactory _weChatApiHttpClientFactory;
         private readonly WeChatOptions _weChatOptions;
@@ -120,6 +123,8 @@ namespace CoreCms.Net.Web.WebApi.Controllers
             , ICoreCmsSettingServices settingServices
             , ICoreCmsServicesServices servicesServices
             , IOptions<WeChatOptions> weChatOptions
+            , ICoreCmsExpressOrderServices coreCmsExpressOrderServices
+            , ICoreCmsParcelStorageServices coreCmsParcelStorageServices
             , ICoreCmsUserServicesOrderServices userServicesOrderServices, ICoreCmsUserServicesTicketServices userServicesTicketServices, ICoreCmsStoreServices storeServices, ICoreCmsCouponServices couponServices, ICoreCmsOrderServices orderServices, IWeChatApiHttpClientFactory weChatApiHttpClientFactory)
         {
             _user = user;
@@ -151,9 +156,10 @@ namespace CoreCms.Net.Web.WebApi.Controllers
             _storeServices = storeServices;
             _couponServices = couponServices;
             _orderServices = orderServices;
+            _coreCmsExpressOrderServices = coreCmsExpressOrderServices;
             _weChatApiHttpClientFactory = weChatApiHttpClientFactory;
             _weChatOptions = weChatOptions.Value;
-
+            _parcelStorageServices = coreCmsParcelStorageServices;
         }
 
         #region wx.login登陆成功之后发送的请求=========================================================
@@ -2069,5 +2075,63 @@ namespace CoreCms.Net.Web.WebApi.Controllers
 
         #endregion
 
+
+
+
+        #region 添加快递代领记录
+        /// <summary>
+        /// 添加快递代领记录
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        public async Task<WebApiCallBack> AddServicesTickets([FromBody] CoreCmsExpressOrderDto entity)
+        {
+            var jm = new WebApiCallBack();
+
+            CoreCmsExpressOrder expressOrder = new CoreCmsExpressOrder
+            {
+                userid = _user.ID,
+                expno = CommonHelper.GetSerialNumberType(9),
+                expcom = entity.expcom,
+                storeid = entity.storeid,
+                storename = entity.storename,
+                explist = entity.explist,
+                recname = entity.recname,
+                rectel = entity.rectel,
+                recaddr = entity.recaddr,
+                sendtime = entity.sendtime,
+                totalpay = entity.totalpay,
+                discount = entity.discount,
+                pointuse = entity.pointuse,
+                serverid = entity.serverid,
+                serverticker = entity.serverticker,
+                orderstatus = 0,
+                note = entity.note,
+                createtime = DateTime.Now
+            };
+
+
+
+
+            jm.status = _coreCmsExpressOrderServices.Insert(expressOrder) > 0;
+
+            if (jm.status)
+            {
+                List<int> kuaiDiIds = entity.explist.Split(',')
+                                     .Where(q => !string.IsNullOrEmpty(q))
+                                     .Select(q => Convert.ToInt32(q))
+                                     .ToList();
+                await _parcelStorageServices.UpdateFieldByIds(kuaiDiIds, x => x.parcel_status);
+            }
+
+            jm.msg = jm.status ? GlobalConstVars.InsertSuccess : GlobalConstVars.InsertFailure;
+
+
+            return jm;
+        }
+
+
+        #endregion
     }
 }

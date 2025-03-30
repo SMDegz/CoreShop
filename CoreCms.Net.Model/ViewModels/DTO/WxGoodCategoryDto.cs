@@ -35,6 +35,11 @@ namespace CoreCms.Net.Model.ViewModels.DTO
         /// </summary>
         public string imageUrl { get; set; }
 
+        /// <summary>
+        ///     数量
+        /// </summary>
+        public int tap { get; set; }
+
         public List<WxGoodCategoryChild> child { get; set; }
     }
 
@@ -59,5 +64,10 @@ namespace CoreCms.Net.Model.ViewModels.DTO
         ///     图片地址
         /// </summary>
         public string imageUrl { get; set; }
+
+        /// <summary>
+        ///     数量
+        /// </summary>
+        public int tap { get; set; }
     }
 }

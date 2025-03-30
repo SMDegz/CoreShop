@@ -55,6 +55,8 @@ namespace CoreCms.Net.Web.WebApi.Controllers
         private ICoreCmsGoodsCollectionServices _goodsCollectionServices;
         private ICoreCmsUserServices _userServices;
         private ICoreCmsGoodsCategoryExtendServices _goodsCategoryExtendServices;
+        private ICoreCmsCartServices _cartServices;
+
 
         /// <summary>
         /// 构造函数
@@ -70,7 +72,9 @@ namespace CoreCms.Net.Web.WebApi.Controllers
             , ICoreCmsGoodsCommentServices goodsCommentServices
             , ICoreCmsGoodsParamsServices goodsParamsServices
             , ICoreCmsGoodsCollectionServices goodsCollectionServices
-            , ICoreCmsUserServices userServices, ICoreCmsGoodsCategoryExtendServices goodsCategoryExtendServices)
+            , ICoreCmsUserServices userServices
+            , ICoreCmsGoodsCategoryExtendServices goodsCategoryExtendServices
+            , ICoreCmsCartServices cartServices)
         {
             _mapper = mapper;
             _user = user;
@@ -85,6 +89,7 @@ namespace CoreCms.Net.Web.WebApi.Controllers
             _goodsCollectionServices = goodsCollectionServices;
             _userServices = userServices;
             _goodsCategoryExtendServices = goodsCategoryExtendServices;
+            this._cartServices = cartServices;
         }
 
         //公共接口====================================================================================================
@@ -103,6 +108,8 @@ namespace CoreCms.Net.Web.WebApi.Controllers
                 OrderByType.Asc);
             var wxGoodCategoryDto = new List<WxGoodCategoryDto>();
 
+            var cartDtoData = await _cartServices.GetCartDtoData(_user.ID);
+            var cartDto = cartDtoData.data as CartDto;
             var parents = data.Where(p => p.parentId == 0).ToList();
             if (parents.Any())
             {
@@ -114,20 +121,38 @@ namespace CoreCms.Net.Web.WebApi.Controllers
                     model.imageUrl = !string.IsNullOrEmpty(p.imageUrl) ? p.imageUrl : "/static/images/common/empty.png";
                     model.sort = p.sort;
 
+                    var mainNum = 0;
+
+                    var cartEntity = cartDto.list.Where(q =>q.good.goodsCategoryId == p.id);
+                    if (cartEntity != null)
+                    {
+                        mainNum = cartEntity.Sum(q => q.nums);
+                    }
+
                     var childs = data.Where(p => p.parentId == model.id).ToList();
                     if (childs.Any())
                     {
                         var childsList = new List<WxGoodCategoryChild>();
                         childs.ForEach(o =>
                         {
+                            int num = 0;
+                            if (cartDto.list.Count > 0) 
+                            {
+                                var cartEntity = cartDto.list.Where(q => q.good.goodsCategoryId == o.id );
+                                num = cartEntity.Any() ? cartEntity.Sum(q=>q.nums) : 0;
+                                mainNum += num;
+                            }
+                            
                             childsList.Add(new WxGoodCategoryChild()
                             {
                                 id = o.id,
                                 imageUrl = !string.IsNullOrEmpty(o.imageUrl) ? o.imageUrl : "/static/images/common/empty.png",
                                 name = o.name,
-                                sort = o.sort
+                                sort = o.sort,
+                                tap = num
                             });
                         });
+                        model.tap = mainNum;
                         model.child = childsList;
                     }
                     wxGoodCategoryDto.Add(model);

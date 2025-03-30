@@ -1,4 +1,4 @@
-﻿<template>
+<template>
     <view class="wrap">
         <u-toast ref="uToast" /><u-no-network></u-no-network>
         <u-navbar :is-back="false" :background="background">
@@ -133,6 +133,7 @@
                     display: 'all'
                 };
                 this.$u.api.cartList(data).then(res => {
+					console.log(res)
                     if (res.status) {
                         _this.shoppingCard = res.data;
                         _this.showHandle(_this.shoppingCard); //数量设置

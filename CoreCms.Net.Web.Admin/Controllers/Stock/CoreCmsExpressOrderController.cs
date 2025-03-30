@@ -149,19 +149,7 @@ namespace CoreCms.Net.Web.Admin.Controllers
 			var sendtime = Request.Form["sendtime"].FirstOrDefault();
             if (!string.IsNullOrEmpty(sendtime))
             {
-                if (sendtime.Contains("到"))
-                {
-                    var dts = sendtime.Split("到");
-                    var dtStart = dts[0].Trim().ObjectToDate();
-                    where = where.And(p => p.sendtime > dtStart);
-                    var dtEnd = dts[1].Trim().ObjectToDate();
-                    where = where.And(p => p.sendtime < dtEnd);
-                }
-                else
-                {
-                    var dt = sendtime.ObjectToDate();
-                    where = where.And(p => p.sendtime > dt);
-                }
+                where = where.And(p => p.sendtime.Contains(sendtime));
             }
 			//总金额 int
 			var totalpay = Request.Form["totalpay"].FirstOrDefault().ObjectToInt(0);
@@ -667,7 +655,7 @@ namespace CoreCms.Net.Web.Admin.Controllers
             if (!string.IsNullOrEmpty(sendtime))
             {
                 var dt = sendtime.ObjectToDate();
-                where = where.And(p => p.sendtime > dt);
+                where = where.And(p => p.recaddr.Contains(recaddr));
             }
 			//总金额 int
 			var totalpay = Request.Form["totalpay"].FirstOrDefault().ObjectToInt(0);

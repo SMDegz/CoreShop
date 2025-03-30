@@ -50,6 +50,8 @@ const install = (Vue, vm) => {
     let getProductInfo = (params = {}) => vm.$u.post('/Api/Good/GetProductInfo', params, { method: 'goods.getproductinfo', needToken: false });
     // 获取商品评论信息
     let goodsComment = (params = {}) => vm.$u.post('/Api/Good/GetGoodsComment', params, { method: 'goods.getgoodscomment', needToken: false });
+	// 需要登录
+	let categoriesLogin = (params = {}) => vm.$u.post('/Api/Good/GetAllCategories', params, { method: 'categories.getallcat', needToken: true });
 
 
 
@@ -179,7 +181,8 @@ const install = (Vue, vm) => {
     let usablePoint = (params = {}) => vm.$u.post('/Api/User/GetUserPoint', params, { method: 'user.getuserpoint', needToken: true });
 	// 获取默认的服务卡
 	let getDefaultServiceTicket = (params = {}) => vm.$u.post('/Api/User/GetDefaultServiceTicket', params, { method: 'user.getdefaultserviceticket', needToken: true });
-
+	// 创建快递代取单
+	let addServicesTickets = (params = {})=>vm.$u.post('/Api/User/AddServicesTickets',params,{method:'user.getdefaultserviceticket',needToken:true});
 
     // 门店列表
     let storeList = (params = {}) => vm.$u.post('/Api/Store/GetStoreList', params, { method: 'store.getstorelist', needToken: false });
@@ -212,6 +215,8 @@ const install = (Vue, vm) => {
     let ladingDel = (params = {}) => vm.$u.post('/Api/Store/LadingDelete', params, { method: 'store.ladingdel', needToken: true });
 	// 快递列表
     let kuaidiList = (params = {}) => vm.$u.post('/Api/Store/UserKuaidiList', params, { method: 'store.ladingdel', needToken: true });
+	// 快递订单列表
+    let userKuaidiOrderList = (params = {}) => vm.$u.post('/Api/Store/UserKuaidiOrderList', params, { method: 'store.ladingdel', needToken: true });
 
 
 
@@ -412,6 +417,7 @@ const install = (Vue, vm) => {
         goodsParams,
         getProductInfo,
         goodsComment,
+		categoriesLogin,
 
         addCart,
         removeCart,
@@ -566,7 +572,9 @@ const install = (Vue, vm) => {
         getverificationPageList,
         serviceLogDelete,
         getServiceVerificationTicketInfo,
-        serviceVerificationTicket
+        serviceVerificationTicket,
+		addServicesTickets,
+		userKuaidiOrderList,
     };
 }
 

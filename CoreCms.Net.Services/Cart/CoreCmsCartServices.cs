@@ -438,6 +438,8 @@ namespace CoreCms.Net.Services
 
             foreach (var item in carts)
             {
+                
+
                 var cartProducts = new CartProducts();
                 //如果没有此商品，就在购物车里删掉
                 var productInfo = await productsService.GetProductInfo(item.productId, false, userId);
@@ -459,6 +461,14 @@ namespace CoreCms.Net.Services
                     await _dal.DeleteAsync(item);
                     continue;
                 }
+
+                var goods = goodsServices.GetGoodsDetial(productInfo.goodsId);
+                if (goods == null)
+                {
+                    await _dal.DeleteAsync(item);
+                    continue;
+                }
+
                 //获取重量
                 var goodsWeight = await goodsServices.GetWeight(item.productId);
 
@@ -470,6 +480,7 @@ namespace CoreCms.Net.Services
                 cartProducts.type = item.type;
                 cartProducts.weight = goodsWeight;
                 cartProducts.products = productInfo;
+                cartProducts.good = goods.Result;
                 //如果传过来了购物车数据，就算指定的购物车的数据，否则，就算全部购物车的数据
                 if (ids != null && ids.Any() && ids.Contains(item.id))
                 {

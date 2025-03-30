@@ -1,0 +1,61 @@
+.pageBox {
+    background-color: #f5f5f5;
+    min-height: 100vh;
+}
+
+.coreshop-card-box {
+    margin: 20rpx;
+    border-radius: 10rpx;
+    box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.coreshop-card-view {
+    padding: 30rpx;
+}
+
+.u-font-lg {
+    font-size: 36rpx;
+    font-weight: bold;
+}
+
+.coreshop-text-bold {
+    font-weight: bold;
+}
+
+.coreshop-text-black {
+    color: #333;
+}
+
+.coreshop-text-gray {
+    color: #999;
+}
+
+.u-text-right {
+    text-align: right;
+}
+
+.title-view {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20rpx;
+}
+
+.title {
+    font-size: 30rpx;
+}
+
+.u-line {
+    border-bottom: 1rpx dashed #eee;
+}
+
+.flex {
+    display: flex;
+}
+
+.u-line-1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

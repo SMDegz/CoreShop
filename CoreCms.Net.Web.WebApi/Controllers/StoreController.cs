@@ -44,6 +44,7 @@ namespace CoreCms.Net.Web.WebApi.Controllers
         private readonly ICoreCmsBillLadingServices _billLadingServices;
         private readonly ICoreCmsOrderServices _orderServices;
         private readonly ICoreCmsParcelStorageServices _parcelStorageServices;
+        private readonly ICoreCmsExpressOrderServices _coreCmsExpressOrderServices;
 
         /// <summary>
         /// 构造函数
@@ -54,7 +55,8 @@ namespace CoreCms.Net.Web.WebApi.Controllers
             , ICoreCmsSettingServices settingServices
             , ICoreCmsBillLadingServices billLadingServices
             , ICoreCmsOrderServices orderServices
-            ,ICoreCmsParcelStorageServices coreCmsParcelStorageServices)
+            , ICoreCmsExpressOrderServices coreCmsExpressOrderServices
+            , ICoreCmsParcelStorageServices coreCmsParcelStorageServices)
         {
             _user = user;
             _storeServices = storeServices;
@@ -63,6 +65,7 @@ namespace CoreCms.Net.Web.WebApi.Controllers
             _billLadingServices = billLadingServices;
             _orderServices = orderServices;
             _parcelStorageServices = coreCmsParcelStorageServices;
+            _coreCmsExpressOrderServices = coreCmsExpressOrderServices;
         }
 
         //公共接口======================================================================================================
@@ -377,14 +380,59 @@ namespace CoreCms.Net.Web.WebApi.Controllers
             var where = PredicateBuilder.True<CoreCmsParcelStorage>();
             where = where.And(p => p.phone_number == entity.phone_number);
             where = where.And(p => p.store_id == entity.store_id);
+            where = where.And(p => p.parcel_status == 1);
 
 
-            var data = await _parcelStorageServices.QueryPageAsync(where, p => p.created_time, OrderByType.Desc, entity.page, entity.limit);
+            var data = await _parcelStorageServices.QueryPageAsync(where, p => p.created_time , OrderByType.Desc, entity.page, entity.limit);
             if (data.Any())
             {
                 foreach (var item in data)
                 {
                     item.ParcelStatusName = EnumHelper.GetEnumDescriptionByValue<GlobalEnumVars.ParcelStatus>(item.parcel_status);
+                }
+            }
+            jm.status = true;
+            jm.data = data;
+            jm.otherData = new
+            {
+                data.TotalCount,
+                data.TotalPages
+            };
+            return jm;
+
+        }
+
+
+        /// <summary>
+        /// 我的快递订单列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        public async Task<WebApiCallBack> UserKuaidiOrderList([FromBody] CoreCmsExpressOrderDto entity)
+        {
+            var jm = new WebApiCallBack();
+
+            var where = PredicateBuilder.True<CoreCmsExpressOrder>();
+            where = where.And(p => p.userid == _user.ID);
+
+            if (!string.IsNullOrEmpty(entity.expno))
+            {
+                where = where.And(p => p.expno == entity.expno);
+            }
+
+            var data = await _coreCmsExpressOrderServices.QueryPageAsync(where, p => p.createtime, OrderByType.Desc, entity.page, entity.limit);
+            if (data.Any())
+            {
+                foreach (var item in data)
+                {
+                    int [] kuaiDiIds = item.explist.Split(',')
+                                     .Where(q => !string.IsNullOrEmpty(q))
+                                     .Select(q => Convert.ToInt32(q)).ToArray();
+
+                    var parcelStorageList = await _parcelStorageServices.QueryByIDsAsync(kuaiDiIds);
+                    item.coreCmsParcelStorageList = parcelStorageList;
+                    item.OrderStatusName = EnumHelper.GetEnumDescriptionByValue<GlobalEnumVars.ExpressOrderStatus>(item.orderstatus);
                 }
             }
             jm.status = true;

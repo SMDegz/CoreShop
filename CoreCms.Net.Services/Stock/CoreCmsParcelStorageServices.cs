@@ -20,6 +20,7 @@ using CoreCms.Net.Model.Entities;
 using CoreCms.Net.Model.ViewModels.Basics;
 using CoreCms.Net.Model.ViewModels.UI;
 using SqlSugar;
+using static CoreCms.Net.Configuration.GlobalEnumVars;
 
 
 namespace CoreCms.Net.Services
@@ -131,7 +132,21 @@ namespace CoreCms.Net.Services
         {
             return await _dal.QueryPageAsync(predicate, orderByExpression, orderByType, pageIndex, pageSize, blUseNoLock);
         }
+
+        public Task<AdminUiCallBack> UpdateFieldByIds(List<int> ids, Expression<Func<CoreCmsParcelStorage, object>> fieldExpression)
+        {
+            return  _dal.UpdateFieldByIds(ids, fieldExpression);
+        }
         #endregion
 
+
+        /// <summary>
+        /// 获取缓存的所有数据
+        /// </summary>
+        /// <returns></returns>
+        public new async Task<List<CoreCmsParcelStorage>> QueryByIDsAsync(int[] lstIds, bool blUseNoLock = false)
+        {
+            return await _dal.QueryByIDsAsync(lstIds);
+        }
     }
 }

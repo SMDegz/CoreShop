@@ -2639,16 +2639,64 @@ namespace CoreCms.Net.Configuration
             PendingPickup = 0,
 
             /// <summary>
+            /// 已填单
+            /// </summary>
+            [Description("已填单")]
+            FormFilled = 1,
+
+            /// <summary>
+            /// 已配送
+            /// </summary>
+            [Description("已配送")]
+            Delivered =2,
+
+            /// <summary>
             /// 已取件
             /// </summary>
             [Description("已取件")]
-            PickedUp = 1,
+            PickedUp = 3,
 
             /// <summary>
             /// 异常
             /// </summary>
             [Description("异常")]
-            Abnormal = 2
+            Abnormal = 4
+        }
+
+        /// <summary>
+        /// 快递状态枚举
+        /// </summary>
+        public enum ExpressOrderStatus
+        {
+            /// <summary>
+            /// 待配送
+            /// </summary>
+            [Description("待配送")]
+            PendingDelivery = 0,
+
+            /// <summary>
+            /// 配送中
+            /// </summary>
+            [Description("配送中")]
+            InDelivery = 1,
+
+            /// <summary>
+            /// 配送完成
+            /// </summary>
+            [Description("配送完成")]
+            DeliveryCompleted = 2,
+
+            /// <summary>
+            /// 已取件
+            /// </summary>
+            [Description("已取件")]
+            PickedUp = 3,
+
+            /// <summary>
+            /// 异常
+            /// </summary>
+            [Description("异常")]
+            Exception = 4
         }
 
         /// <summary>

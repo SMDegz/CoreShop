@@ -39,6 +39,10 @@
 					@tap.stop="swichMenu(item,index)">
 					<text class="u-line-1">{{item.name}}</text>
 				</view>
+				<view class="action" @click="redirectCart">
+					<u-badge class="car-num" :count="cartNums?cartNums:0" type="error" :offset="[-3, -6]"></u-badge>
+					<u-icon name="shopping-cart" :size="40" label="购物车" :label-size="22" label-pos="bottom"></u-icon>
+				</view>
 			</scroll-view>
 			<block v-for="(item,index) in tabbar" :key="index">
 				<scroll-view scroll-y class="right-box" v-if="current==index">
@@ -68,7 +72,10 @@
 				<view v-for="(item,index) in tabbar" :key="index" class="u-tab-item"
 					:class="[current==index ? 'u-tab-item-active' : '']" :data-current="index"
 					@tap.stop="swichMenu(item,index)">
-					<text class="u-line-1">{{item.name}}</text>
+					<view>
+						<text class="u-line-1">{{item.name}}</text>
+						<u-badge class="car-num" :count="item.tap" type="error" :absolute=false></u-badge>
+					</view>
 				</view>
 			</scroll-view>
 			<block v-for="(item,index) in tabbar" :key="index">
@@ -84,7 +91,11 @@
 									<u-image width="120rpx" height="120rpx" :src="item1.imageUrl">
 										<u-loading slot="loading"></u-loading>
 									</u-image>
-									<view class="item-menu-name">{{item1.name}}</view>
+									<view style="display: flex;">
+										<view class="item-menu-name">{{item1.name}}</view>
+										<u-badge class="car-num" :count="item1.tap" type="error"
+											:absolute=false></u-badge>
+									</view>
 								</view>
 							</view>
 						</view>
@@ -93,17 +104,17 @@
 							<scroll-view scroll-y="true" :scroll-into-view="toView" class="scroll-Y"
 								@scrolltolower="lower" enable-back-to-top="true" lower-threshold="45">
 								<!-- 列表图片 -->
-								<view v-if="currentList === 1">
+								<view v-if="1 === 1">
 									<view v-if="goodsList.length > 0">
 										<view class="img-list-item" v-for="(item_good, index_good) in goodsList"
-											:key="index_good" >
+											:key="index_good">
 											<view class="good_box">
 												<u-row gutter="5" justify="space-between">
 													<u-col span="4">
 														<!-- 警告：微信小程序中需要hx2.8.11版本才支持在template中结合其他组件，比如下方的lazy-load组件 -->
 														<u-lazy-load threshold="-150" border-radius="10"
-															:image="item_good.image"
-															:index="item_good.id" @click="goGoodsDetail(item_good.id)"></u-lazy-load>
+															:image="item_good.image" :index="item_good.id"
+															@click="goGoodsDetail(item_good.id)"></u-lazy-load>
 														<view class="good-tag-recommend2" v-if="item_good.isRecommend">
 															推荐
 														</view>
@@ -123,18 +134,27 @@
 																	<!-- <span class="u-font-xs  coreshop-text-through u-margin-left-15 coreshop-text-gray">{{item.mktprice}}元</span> -->
 																</view>
 																<view class="good-des u-padding-10"
-																	v-if="item_good.commentsCount > 0">
-																	{{ item_good.commentsCount }}条评论
+																	v-if="item_good.buyCount > 0">
+																	销量：{{ item_good.buyCount }}
 																</view>
 																<view class="good-des u-padding-10"
-																	v-else-if="item_good.commentsCount <= 0">
-																	暂无评论
+																	v-else-if="item_good.buyCount <= 0">
+																	销量：0
 																</view>
 															</view>
-															<view>
-																<u-icon name="shopping-cart" color="#2979ff" size="40" class="btnCart"
-															@click.stop="clickHandle(item_good.id)" v-if="item_good.stock > 0"></u-icon>
-																<u-icon name="shopping-cart" color="#cfcfcf" size="40" class="btnCart" v-else></u-icon>
+															<view class="btnCart" v-if="item_good.num > 0">
+																<u-number-box :disabled="false"
+																	:index="item_good.productId" v-model="item_good.num"
+																	@change="numberChange" :step="1" :min="1"
+																	:max="item_good.stock"></u-number-box>
+															</view>
+															<view v-else>
+																<u-icon name="shopping-cart" color="#2979ff" size="40"
+																	class="btnCart"
+																	@click.stop="clickHandle(item_good.id)"
+																	v-if="item_good.stock > 0"></u-icon>
+																<u-icon name="shopping-cart" color="#cfcfcf" size="40"
+																	class="btnCart" v-else></u-icon>
 															</view>
 														</view>
 													</u-col>
@@ -161,7 +181,11 @@
 	</view>
 </template>
 <script>
-	import { mapMutations, mapActions, mapState } from 'vuex';
+	import {
+		mapMutations,
+		mapActions,
+		mapState
+	} from 'vuex';
 	import {
 		goods
 	} from '@/common/mixins/mixinsHelper.js';
@@ -169,6 +193,10 @@
 		mixins: [goods],
 		data() {
 			return {
+				cartIds: '',
+				shoppingCard: {},
+				totalprice: 0,
+
 				background: {
 					backgroundColor: '#e54d42',
 				},
@@ -217,12 +245,14 @@
 				allgrid: false,
 				screents: true,
 				screentc: false,
-				
-				buyNum:1,
+
+				buyNum: 1,
 				submitStatus: false,
 				cartNums: 0, // 购物车数量
 				type: 1, // 1加入购物车 2购买
-				goodsInfo: { album: [] }, // 商品详情
+				goodsInfo: {
+					album: []
+				}, // 商品详情
 				product: {}, // 货品详情
 				isfav: false, // 商品是否收藏
 				minBuyNum: 1, // 最小可购买数量
@@ -240,47 +270,72 @@
 		},
 		computed: {
 			...mapState({
-			    hasLogin: state => state.hasLogin,
-			    userInfo: state => state.userInfo,
+				hasLogin: state => state.hasLogin,
+				userInfo: state => state.userInfo,
 			}),
 			hasLogin: {
-			    get() {
-			        return this.$store.state.hasLogin;
-			    },
-			    set(val) {
-			        this.$store.commit('hasLogin', val);
-			    }
+				get() {
+					return this.$store.state.hasLogin;
+				},
+				set(val) {
+					this.$store.commit('hasLogin', val);
+				}
 			},
 			userInfo: {
-			    get() {
-			        return this.$store.state.userInfo;
-			    },
-			    set(val) {
-			        this.$store.commit('userInfo', val);
-			    }
+				get() {
+					return this.$store.state.userInfo;
+				},
+				set(val) {
+					this.$store.commit('userInfo', val);
+				}
 			},
 			CateStyle() {
 				return this.$store.state.config.cateStyle ? this.$store.state.config.cateStyle : 3;
 			}
 		},
 		onShow() {
-		    this.submitStatus = false;
+			this.categories();
+			this.submitStatus = false;
 		},
 		onLoad() {
-			this.categories();
 			this.getBanner();
-
-
 		},
 		onPageScroll(e) {
 			this.scrollTop = e.scrollTop;
 		},
 		methods: {
+			numberChange: function(d) {
+				console.log('hjx2')
+				console.log(d)
+				var id = d.index;
+				var nums = d.value;
+				let _this = this;
+				let data = {
+					id: id,
+					nums: nums
+				};
+				_this.$u.api.setCartNum(data).then(res => {
+					console.log(res)
+					if (res.status) {
+						var total = 0;
+						for (let i in _this.shoppingCard.list) {
+							if (_this.shoppingCard.list[i].productId == id) {
+								_this.shoppingCard.list[i].nums = nums;
+								total += Number(_this.shoppingCard.list[i].products.price) * Number(_this
+									.shoppingCard.list[i].nums);
+							}
+						}
+						_this.totalprice = _this.$common.formatMoney(total, 2, '');
+					} else {
+						_this.$u.toast(res.msg);
+					}
+				});
+			},
 			getGoodsPro: function(catId) {
 				var where = {};
 				if (catId) {
-				    where.catId = catId;
-					where.hot=true;
+					where.catId = catId;
+					where.hot = true;
 				}
 				this.searchData.where = where;
 				this.setSearchData(this.searchData, true);
@@ -301,9 +356,15 @@
 							}
 						}
 						_this.goodsList = _this.goodsList.concat(res.data.list);
-						if(res.data.list == null  || res.data.list.length <=0){
-							_this.$refs.uToast.show({ title: "火速上架中...", type: 'success', back: false });
+						if (res.data.list == null || res.data.list.length <= 0) {
+							_this.$refs.uToast.show({
+								title: "火速上架中...",
+								type: 'success',
+								back: false
+							});
 						}
+
+						_this.getCartData();
 
 
 						//console.log(_this.searchData);
@@ -337,7 +398,7 @@
 				}
 				return newData;
 			},
-			goGoodsByClass:function(catId,index) {
+			goGoodsByClass: function(catId, index) {
 				this.currentChild = index
 				this.getGoodsPro(catId)
 			},
@@ -387,21 +448,36 @@
 			},
 			categories() {
 				var _this = this;
-				_this.$u.api.categories().then(res => {
-					console.log(res)
-					if (res.status) {
-						_this.tabbar = res.data;
-						if(res.data !=null && res.data.length > 0 && res.data[0].child.length > 0){
-							_this.goGoodsByClass(res.data[_this.current].child[_this.currentChild].id,_this.currentChild)
+				if (this.hasLogin) {
+					_this.$u.api.categoriesLogin().then(res => {
+						console.log(res)
+						if (res.status) {
+							_this.tabbar = res.data;
+							if (res.data != null && res.data.length > 0 && res.data[0].child.length > 0) {
+								_this.goGoodsByClass(res.data[_this.current].child[_this.currentChild].id, _this
+									.currentChild)
+							}
 						}
-					}
-				});
+					});
+				} else {
+					_this.$u.api.categories().then(res => {
+						console.log(res)
+						if (res.status) {
+							_this.tabbar = res.data;
+							if (res.data != null && res.data.length > 0 && res.data[0].child.length > 0) {
+								_this.goGoodsByClass(res.data[_this.current].child[_this.currentChild].id, _this
+									.currentChild)
+							}
+						}
+					});
+				}
+
 			},
 			getImg() {
 				return Math.floor(Math.random() * 35);
 			},
 			// 点击左边的栏目切换
-			async swichMenu(item,index) {
+			async swichMenu(item, index) {
 				console.log(item)
 				if (index == this.current) return;
 				this.current = index;
@@ -412,11 +488,11 @@
 				}
 				// 将菜单菜单活动item垂直居中
 				this.scrollTop = index * this.menuItemHeight + this.menuItemHeight / 2 - this.menuHeight / 2;
-				if(this.tabbar !=null && this.tabbar.length > 0 && this.tabbar[0].child.length > 0){
-					var classId =this.tabbar[index].child[0].id;
-					this.goGoodsByClass(classId,0)
+				if (this.tabbar != null && this.tabbar.length > 0 && this.tabbar[0].child.length > 0) {
+					var classId = this.tabbar[index].child[0].id;
+					this.goGoodsByClass(classId, 0)
 				}
-				
+
 			},
 			// 获取一个目标元素的高度
 			getElRect(elClass, dataVal) {
@@ -494,120 +570,165 @@
 					})
 				}
 			},
-			
-			
+
+
 			// 加入购物车
 			addToCart(goodId) {
-			    let data = {
-			        productId: goodId,
-			        nums: this.buyNum
-			    }
-			    this.$u.api.addCart(data).then(res => {
+				let data = {
+					productId: goodId,
+					nums: this.buyNum
+				}
+				this.$u.api.addCart(data).then(res => {
 					console.log("addcart")
 					console.log(res)
-			        this.submitStatus = false;
-			        if (res.status) {
-			            this.getCartNums(); // 获取购物车数量
-			            this.$refs.uToast.show({ title: res.msg, type: 'success', back: false });
-			        } else {
-			            this.$u.toast(res.msg);
-			        }
-			    });
+					this.submitStatus = false;
+					if (res.status) {
+						this.getCartNums(); // 获取购物车数量
+						this.$refs.uToast.show({
+							title: res.msg,
+							type: 'success',
+							back: false
+						});
+					} else {
+						this.$u.toast(res.msg);
+					}
+				});
 			},
 			// 获取购物车数量
 			getCartNums() {
-			    let userToken = this.$db.get("userToken");
-			    if (userToken && userToken != '') {
-			        // 获取购物车数量
-			        this.$u.api.getCartNum().then(res => {
+				let userToken = this.$db.get("userToken");
+				if (userToken && userToken != '') {
+					// 获取购物车数量
+					this.$u.api.getCartNum().then(res => {
 						console.log("getCartNums")
 						console.log(res)
-			            if (res.status) {
-			                this.cartNums = res.data;
-			            }
-			        })
-			    }
+						if (res.status) {
+							this.cartNums = res.data;
+						}
+					})
+				}
+			},
+			//获取购物车数据
+			getCartData() {
+				let _this = this;
+				let cartIds = _this.arrayToStr(_this.cartIds);
+				let data = {
+					ids: cartIds,
+					display: 'all'
+				};
+				this.$u.api.cartList(data).then(res => {
+					console.log(res)
+
+					if (res.status) {
+						_this.shoppingCard = res.data;
+						if (_this.shoppingCard != null) {
+							_this.shoppingCard.list.forEach(function(element) {
+								
+								_this.goodsList.forEach(function(element3) {
+									if (element3.id == element.good.id) {
+										element3.num = element.nums
+										element3.productId = element.productId
+									}
+								})
+							}, this);
+						}
+						// _this.showHandle(_this.shoppingCard); //数量设置
+						console.log(_this.goodsList);
+					}
+				});
 			},
 			clickHandle(goodId) {
-			    if (!this.hasLogin) {
-			        this.$store.commit('showLoginTip', true);
-			        return false;
-			    }
-			    this.submitStatus = true;
+				if (!this.hasLogin) {
+					this.$store.commit('showLoginTip', true);
+					return false;
+				}
+				this.submitStatus = true;
 				this.getGoodsDetail(goodId);
 				console.log(this.product)
-			   
+
+			},
+			//数组转字符串
+			arrayToStr: function(array) {
+				return array.toString();
 			},
 			// 获取商品详情
 			getGoodsDetail(goodsId) {
-			    let _this = this;
-			    let data = {
-			        id: parseInt(goodsId)
-			    }
-			    // 如果用户已经登录 要传用户token
-			    let userToken = this.$db.get("userToken");
-			    if (userToken) {
-			        this.$u.api.goodsDetailByToken(data).then(res => {
+				let _this = this;
+				let data = {
+					id: parseInt(goodsId)
+				}
+				// 如果用户已经登录 要传用户token
+				let userToken = this.$db.get("userToken");
+				if (userToken) {
+					this.$u.api.goodsDetailByToken(data).then(res => {
 						console.log("getGoodsDetail2")
 						console.log(res)
-			            if (res.status == true) {
-			                let info = res.data;
-			                let products = res.data.product;
-			                _this.goodsInfo = info;
-			                _this.isfav = res.data.isFav;
-			                _this.product = _this.spesClassHandle(products);
-			
-			                _this.buyNum = _this.product.stock >= _this.minBuyNum ? _this.minBuyNum : 0;
-			                // 判断如果登录用户添加商品浏览足迹
-			                // if (userToken) {
-			                //     _this.goodsBrowsing();
-			                // }
+						if (res.status == true) {
+							let info = res.data;
+							let products = res.data.product;
+							_this.goodsInfo = info;
+							_this.isfav = res.data.isFav;
+							_this.product = _this.spesClassHandle(products);
+
+							_this.buyNum = _this.product.stock >= _this.minBuyNum ? _this.minBuyNum : 0;
+							// 判断如果登录用户添加商品浏览足迹
+							// if (userToken) {
+							//     _this.goodsBrowsing();
+							// }
 							_this.addToCart(_this.product.id);
-			            } else {
-			                _this.$refs.uToast.show({ title: res.msg, type: 'error', back: true })
-			            }
-			        })
-			    } else {
-			        this.$u.api.goodsDetail(data).then(res => {
-			            if (res.status == true) {
-			                let info = res.data;
-			                let products = res.data.product;
-			                _this.goodsInfo = info;
-			                _this.isfav = res.data.isFav;
-			                _this.product = _this.spesClassHandle(products);
-			
-			                _this.buyNum = _this.product.stock >= _this.minBuyNum ? _this.minBuyNum : 0;
-			                // 判断如果登录用户添加商品浏览足迹
-			                // if (userToken) {
-			                //     _this.goodsBrowsing();
-			                // }
-			            } else {
-			                _this.$refs.uToast.show({ title: res.msg, type: 'error', back: true })
-			            }
-			        })
-			    }
-			
+						} else {
+							_this.$refs.uToast.show({
+								title: res.msg,
+								type: 'error',
+								back: true
+							})
+						}
+					})
+				} else {
+					this.$u.api.goodsDetail(data).then(res => {
+						if (res.status == true) {
+							let info = res.data;
+							let products = res.data.product;
+							_this.goodsInfo = info;
+							_this.isfav = res.data.isFav;
+							_this.product = _this.spesClassHandle(products);
+
+							_this.buyNum = _this.product.stock >= _this.minBuyNum ? _this.minBuyNum : 0;
+							// 判断如果登录用户添加商品浏览足迹
+							// if (userToken) {
+							//     _this.goodsBrowsing();
+							// }
+						} else {
+							_this.$refs.uToast.show({
+								title: res.msg,
+								type: 'error',
+								back: true
+							})
+						}
+					})
+				}
+
 			},
 			// 多规格样式统一处理
 			spesClassHandle(products) {
-			    // 判断是否是多规格 (是否有默认规格)
-			    if (products.hasOwnProperty('defaultSpecificationDescription')) {
-			        let spes = products.defaultSpecificationDescription;
-			        for (let key in spes) {
-			            for (let i in spes[key]) {
-			                if (spes[key][i].hasOwnProperty('isDefault') && spes[key][i].isDefault === true) {
-			                    this.$set(spes[key][i], 'cla', 'selected');
-			                } else if (spes[key][i].hasOwnProperty('productId') && spes[key][i].productId) {
-			                    this.$set(spes[key][i], 'cla', 'not-selected');
-			                } else {
-			                    this.$set(spes[key][i], 'cla', 'none');
-			                }
-			            }
-			        }
-			        spes = JSON.stringify(spes)
-			        products.defaultSpecificationDescription = spes;
-			    }
-			    return products;
+				// 判断是否是多规格 (是否有默认规格)
+				if (products.hasOwnProperty('defaultSpecificationDescription')) {
+					let spes = products.defaultSpecificationDescription;
+					for (let key in spes) {
+						for (let i in spes[key]) {
+							if (spes[key][i].hasOwnProperty('isDefault') && spes[key][i].isDefault === true) {
+								this.$set(spes[key][i], 'cla', 'selected');
+							} else if (spes[key][i].hasOwnProperty('productId') && spes[key][i].productId) {
+								this.$set(spes[key][i], 'cla', 'not-selected');
+							} else {
+								this.$set(spes[key][i], 'cla', 'none');
+							}
+						}
+					}
+					spes = JSON.stringify(spes)
+					products.defaultSpecificationDescription = spes;
+				}
+				return products;
 			},
 		}
 	}

@@ -320,6 +320,25 @@
 					    router: '/pages/member/qiandao/index',
 					    showItem: true
 					},
+					kuaidi: {
+					    name: '快递到家',
+					    icon: 'search',
+					    router: '/pages/kuaidi/info/info',
+					    showItem: true
+					},
+					kuaidiList: {
+						name: '快递管理',
+						icon: 'search',
+						router: '/pages/kuaidi/manage/manage',
+						showItem: true
+					},
+					kuaidiDetail: {
+						name: '快递详情',
+						icon: 'search',
+						router: '/pages/kuaidi/detail/detail',
+						showItem: true
+					},
+					
                 },
                 other: {
                     invite: {

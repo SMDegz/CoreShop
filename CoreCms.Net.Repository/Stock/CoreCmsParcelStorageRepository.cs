@@ -120,6 +120,37 @@ namespace CoreCms.Net.Repository
         }
 
         /// <summary>
+        /// 重写异步更新方法更新Ids列表
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ids"></param>
+        /// <param name="fieldExpression"></param>
+        /// <returns></returns>
+        public async Task<AdminUiCallBack>  UpdateFieldByIds<T>(List<int> ids, Expression<Func<T, object>> fieldExpression)
+        {
+            var jm = new AdminUiCallBack();
+
+            var queryable = DbClient.Queryable<CoreCmsParcelStorage>();
+            var queryables = queryable.In(ids).ToList();
+            foreach (var item in queryables)
+            {
+                item.parcel_status = 2;
+            }
+            var bl = await DbClient.Updateable<CoreCmsParcelStorage>(queryables).ExecuteCommandHasChangeAsync();
+
+            jm.code = bl ? 0 : 1;
+            jm.msg = bl ? GlobalConstVars.EditSuccess : GlobalConstVars.EditFailure;
+            if (bl)
+            {
+                await UpdateCaChe();
+            }
+
+            return jm;
+        }
+
+
+
+        /// <summary>
         /// 重写删除指定ID的数据
         /// </summary>
         /// <param name="id"></param>
@@ -216,6 +247,7 @@ namespace CoreCms.Net.Repository
                       id = p.id,
                 phone_number = p.phone_number,
                 store_id = p.store_id,
+                pickupcode = p.pickupcode,
                 tracking_number = p.tracking_number,
                 parcel_status = p.parcel_status,
                 storage_time = p.storage_time,
@@ -239,7 +271,8 @@ namespace CoreCms.Net.Repository
                       id = p.id,
                 phone_number = p.phone_number,
                 store_id = p.store_id,
-                tracking_number = p.tracking_number,
+                    pickupcode = p.pickupcode,
+                    tracking_number = p.tracking_number,
                 parcel_status = p.parcel_status,
                 storage_time = p.storage_time,
                 pickup_time = p.pickup_time,
