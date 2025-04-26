@@ -46,6 +46,7 @@
 	 * @property {String | Number} input-width 输入框宽度，单位rpx（默认80）
 	 * @property {String | Number} input-height 输入框和按钮的高度，单位rpx（默认50）
 	 * @property {String | Number} index 事件回调时用以区分当前发生变化的是哪个输入框
+	 * @property {String | Number} pid 事件回调时用以区分当前发生变化的是哪个分类Id
 	 * @property {Boolean} long-press 是否开启长按连续递增或递减(默认true)
 	 * @property {String | Number} press-time 开启长按触发后，每触发一次需要多久，单位ms(默认250)
 	 * @property {String | Number} cursor-spacing 指定光标于键盘的距离，避免键盘遮挡输入框，单位rpx（默认200）
@@ -110,6 +111,10 @@
 			},
 			// index索引，用于列表中使用，让用户知道是哪个numberbox发生了变化，一般使用for循环出来的index值即可
 			index: {
+				type: [Number, String],
+				default: ''
+			},
+			pid: {
 				type: [Number, String],
 				default: ''
 			},
@@ -182,6 +187,7 @@
 				timer: null, // 用作长按的定时器
 				changeFromInner: false, // 值发生变化，是来自内部还是外部
 				innerChangeTimer: null, // 内部定时器
+				oldValue:0,//原始数据
 			};
 		},
 		created() {
@@ -267,6 +273,8 @@
 				if (value < this.min || value > this.max) {
 					return;
 				}
+				
+				this.oldValue = this.inputVal;
 				this.inputVal = value;
 				this.handleChange(value, type);
 			},
@@ -284,6 +292,7 @@
 					val = this.min;
 				}
 				this.$nextTick(() => {
+					this.oldValue = val;
 					this.inputVal = val;
 				})
 				this.handleChange(val, 'blur');
@@ -310,7 +319,9 @@
 				this.$emit(type, {
 					// 转为Number类型
 					value: Number(value),
-					index: this.index
+					index: this.index,
+					pid:this.pid,
+					oldValue:this.oldValue
 				})
 			}
 		}

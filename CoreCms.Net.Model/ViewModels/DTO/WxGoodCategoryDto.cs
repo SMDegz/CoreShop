@@ -40,6 +40,11 @@ namespace CoreCms.Net.Model.ViewModels.DTO
         /// </summary>
         public int tap { get; set; }
 
+        /// <summary>
+        ///     数量
+        /// </summary>
+        public int tapChild { get; set; }
+
         public List<WxGoodCategoryChild> child { get; set; }
     }
 

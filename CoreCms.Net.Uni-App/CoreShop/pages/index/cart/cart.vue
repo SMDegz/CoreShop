@@ -39,7 +39,7 @@
                     <view class="cart-space-between" style="margin-top:20rpx;">
                         <text class="cart-shoppingcard-goods-price">￥{{item.products.price}}</text>
                         <view class="cart-shoppingcard-goods-number">
-                            <u-number-box :disabled="false" :index="index" v-model="item.nums" @change="numberChange" :step="1" :min="1" :max="item.products.stock"></u-number-box>
+                            <u-number-box :disabled="this.canAdd" :index="index" v-model="item.nums" @change="numberChange" :step="1" :min="1" :max="item.products.stock"></u-number-box>
                         </view>
                     </view>
 
@@ -79,6 +79,8 @@
         mixins: [goods],
         data() {
             return {
+				canAdd:true,
+				oldData:{},
                 background: {
                     backgroundColor: '#e54d42',
                 },
@@ -241,6 +243,13 @@
                 _that.totalprice = _that.$common.formatMoney(total, 2, '');
             },
             numberChange: function (d) {
+				if(d.oldValue==0 || d== this.oldData||this.canAdd==false){
+					return;
+				}
+				this.canAdd=false;
+				this.oldData = d;
+				console.log('hjx1')
+				console.log(d)
                 var id = this.shoppingCard.list[d.index].productId;
                 var nums = d.value;
                 let _this = this;
@@ -250,9 +259,13 @@
                 };
                 _this.$u.api.setCartNum(data).then(res => {
                     if (res.status) {
+						console.log(_this.shoppingCard);
                         _this.shoppingCard.list[d.index].nums = d.value;
+						
+						_this.canAdd=true;
                     } else {
                         _this.$u.toast(res.msg);
+						_this.canAdd=true;
                     }
                 });
                 //重新计算总价
@@ -273,7 +286,7 @@
                             };
                             _this.$u.api.removeCart(data).then(res => {
                                 if (res.status) {
-                                    //清除已经勾选的商品和购物车数据
+                                    // //清除已经勾选的商品和购物车数据
                                     var idIndex = _this.cartIds.indexOf(_this.shoppingCard.list[index].id);
                                     if (idIndex > -1) {
                                         _this.cartIds.splice(index, 1);

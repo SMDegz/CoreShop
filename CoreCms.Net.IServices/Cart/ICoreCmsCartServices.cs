@@ -30,7 +30,7 @@ namespace CoreCms.Net.IServices
         /// <param name="numType"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        Task<WebApiCallBack> SetCartNum(int id, int nums, int userId, int numType, int type = 1);
+        Task<WebApiCallBack> SetCartNum(int id, int nums, int userId, int numType, int type = 1,int cid = 0);
 
 
         /// <summary>

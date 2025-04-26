@@ -74,7 +74,7 @@
 					@tap.stop="swichMenu(item,index)">
 					<view>
 						<text class="u-line-1">{{item.name}}</text>
-						<u-badge class="car-num" :count="item.tap" type="error" :absolute=false></u-badge>
+						<u-badge class="car-num" :count="item.tap + item.tapChild" type="error" :absolute=false></u-badge>
 					</view>
 				</view>
 			</scroll-view>
@@ -144,8 +144,8 @@
 															</view>
 															<view class="btnCart" v-if="item_good.num > 0">
 																<u-number-box :disabled="false"
-																	:index="item_good.productId" v-model="item_good.num"
-																	@change="numberChange" :step="1" :min="1"
+																	:index="item_good.productId" :pid="item_good.goodsCategoryId" v-model="item_good.num"
+																	@change="numberChange" :step="1" :min="0"
 																	:max="item_good.stock"></u-number-box>
 															</view>
 															<view v-else>
@@ -193,6 +193,7 @@
 		mixins: [goods],
 		data() {
 			return {
+				oldData:{},
 				cartIds: '',
 				shoppingCard: {},
 				totalprice: 0,
@@ -204,6 +205,8 @@
 					color: '#ffffff',
 				},
 				tabbar: [],
+				tabbarNum: [],
+				tabbarChildNum:[],
 				scrollTop: 0, //tab标题的滚动条位置
 				current: 0, // 预设当前项的值
 				currentChild: 0, // 预设当前项的子值
@@ -294,37 +297,55 @@
 			}
 		},
 		onShow() {
-			this.categories();
 			this.submitStatus = false;
+			this.getCartData();
 		},
 		onLoad() {
+			this.categories();
 			this.getBanner();
+			
+			
 		},
 		onPageScroll(e) {
 			this.scrollTop = e.scrollTop;
 		},
 		methods: {
 			numberChange: function(d) {
+				if(d.oldValue==0 || d== this.oldData){
+					return;
+				}
+				this.oldData = d;
 				console.log('hjx2')
 				console.log(d)
 				var id = d.index;
 				var nums = d.value;
+				var pid = d.pid;
 				let _this = this;
 				let data = {
 					id: id,
-					nums: nums
+					nums: nums,
+					cid:pid
 				};
 				_this.$u.api.setCartNum(data).then(res => {
 					console.log(res)
+					console.log(_this.shoppingCard)
+					var isHave = false;
 					if (res.status) {
 						var total = 0;
 						for (let i in _this.shoppingCard.list) {
 							if (_this.shoppingCard.list[i].productId == id) {
+								
 								_this.shoppingCard.list[i].nums = nums;
 								total += Number(_this.shoppingCard.list[i].products.price) * Number(_this
 									.shoppingCard.list[i].nums);
+								isHave = true;
 							}
 						}
+						if(isHave==false){
+							_this.getCartData();
+						}
+						_this.tabbar[_this.current].tapChild = res.data;
+						
 						_this.totalprice = _this.$common.formatMoney(total, 2, '');
 					} else {
 						_this.$u.toast(res.msg);
@@ -364,10 +385,19 @@
 							});
 						}
 
-						_this.getCartData();
+						if (_this.shoppingCard != null && _this.shoppingCard.list.length>0) {
+							_this.shoppingCard.list.forEach(function(element) {
+								
+								_this.goodsList.forEach(function(element3) {
+									if (element3.id == element.good.id) {
+										element3.num = element.nums
+										element3.productId = element.productId
+									}
+								})
+							}, this);
+						}
 
 
-						//console.log(_this.searchData);
 						if (res.data.totalPages > _this.searchData.page) {
 							_this.loadStatus = 'loadmore';
 							_this.searchData.page++;
@@ -578,12 +608,14 @@
 					productId: goodId,
 					nums: this.buyNum
 				}
+				var _this = this;
 				this.$u.api.addCart(data).then(res => {
 					console.log("addcart")
 					console.log(res)
 					this.submitStatus = false;
 					if (res.status) {
-						this.getCartNums(); // 获取购物车数量
+						_this.getCartData();
+						_this.tabbar[_this.current].tapChild = _this.tabbar[_this.current].tapChild + 1;
 						this.$refs.uToast.show({
 							title: res.msg,
 							type: 'success',
@@ -632,8 +664,6 @@
 								})
 							}, this);
 						}
-						// _this.showHandle(_this.shoppingCard); //数量设置
-						console.log(_this.goodsList);
 					}
 				});
 			},
@@ -671,6 +701,8 @@
 							_this.product = _this.spesClassHandle(products);
 
 							_this.buyNum = _this.product.stock >= _this.minBuyNum ? _this.minBuyNum : 0;
+							
+							
 							// 判断如果登录用户添加商品浏览足迹
 							// if (userToken) {
 							//     _this.goodsBrowsing();

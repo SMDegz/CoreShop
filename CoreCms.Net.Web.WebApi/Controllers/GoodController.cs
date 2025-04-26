@@ -122,6 +122,7 @@ namespace CoreCms.Net.Web.WebApi.Controllers
                     model.sort = p.sort;
 
                     var mainNum = 0;
+                    var childNum = 0;
 
                     var cartEntity = cartDto.list.Where(q =>q.good.goodsCategoryId == p.id);
                     if (cartEntity != null)
@@ -140,7 +141,7 @@ namespace CoreCms.Net.Web.WebApi.Controllers
                             {
                                 var cartEntity = cartDto.list.Where(q => q.good.goodsCategoryId == o.id );
                                 num = cartEntity.Any() ? cartEntity.Sum(q=>q.nums) : 0;
-                                mainNum += num;
+                                childNum += num;
                             }
                             
                             childsList.Add(new WxGoodCategoryChild()
@@ -153,6 +154,7 @@ namespace CoreCms.Net.Web.WebApi.Controllers
                             });
                         });
                         model.tap = mainNum;
+                        model.tapChild = childNum;
                         model.child = childsList;
                     }
                     wxGoodCategoryDto.Add(model);

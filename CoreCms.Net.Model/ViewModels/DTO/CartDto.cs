@@ -117,5 +117,6 @@ namespace CoreCms.Net.Model.ViewModels.DTO
     {
         public int id { get; set; } = 0;
         public int nums { get; set; } = 1;
+        public int cid { get; set; } = 0;
     }
 }

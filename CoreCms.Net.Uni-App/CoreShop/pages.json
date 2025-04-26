@@ -49,6 +49,13 @@
 			}
 		},
 		{
+			"path": "pages/index/index/index",
+			"style": {
+				"navigationBarTextStyle": "white",
+				"navigationBarTitleText": "购物车1"
+			}
+		},
+		{
 			"path": "pages/index/member/member",
 			"style": {
 				"navigationBarTextStyle": "black",
@@ -825,6 +832,12 @@
 			{
 				"pagePath": "pages/index/cart/cart",
 				"text": "购物车",
+				"iconPath": "static/images/indexMenus/index03.png",
+				"selectedIconPath": "static/images/indexMenus/index03_1.png"
+			},
+			{
+				"pagePath": "pages/index/index/index",
+				"text": "快递",
 				"iconPath": "static/images/indexMenus/index03.png",
 				"selectedIconPath": "static/images/indexMenus/index03_1.png"
 			},

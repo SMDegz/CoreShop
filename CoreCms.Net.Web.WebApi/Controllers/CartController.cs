@@ -116,7 +116,7 @@ namespace CoreCms.Net.Web.WebApi.Controllers
         [Authorize]
         public async Task<WebApiCallBack> SetCartNum([FromBody] FMSetCartNum entity)
         {
-            var jm = await _cartServices.SetCartNum(entity.id, entity.nums, _user.ID, 2, 1);
+            var jm = await _cartServices.SetCartNum(entity.id, entity.nums, _user.ID, 2, 1,entity.cid);
             return jm;
         }
 

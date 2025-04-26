@@ -28,6 +28,7 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SqlSugar;
+using static SKIT.FlurlHttpClient.Wechat.Api.Models.CgibinTagsMembersGetBlackListResponse.Types;
 
 
 namespace CoreCms.Net.Services
@@ -92,17 +93,17 @@ namespace CoreCms.Net.Services
 
         /// <summary>
         /// 设置购物车商品数量
-        /// </summary>
+        /// </summary> 
         /// <param name="id"></param>
         /// <param name="nums"></param>
         /// <param name="userId"></param>
         /// <param name="numType"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public async Task<WebApiCallBack> SetCartNum(int id, int nums, int userId, int numType, int type = 1)
+        public async Task<WebApiCallBack> SetCartNum(int id, int nums, int userId, int numType, int type = 1, int cid = 0)
         {
             var jm = new WebApiCallBack();
-            if (nums <= 0)
+            if (nums < 0)
             {
                 jm.msg = "商品数量必须为正整数";
                 return jm;
@@ -123,10 +124,34 @@ namespace CoreCms.Net.Services
                 jm.msg = "获取购物车数据失败";
                 return jm;
             }
-            var outData = await Add(userId, cartModel.productId, nums, numType, type);
-            jm.status = outData.status;
-            jm.msg = jm.status ? GlobalConstVars.SetDataSuccess : GlobalConstVars.SetDataFailure;
-            jm.otherData = outData;
+
+            if (nums == 0)
+            {
+                bool isSuccess = await _dal.DeleteAsync(p => p.id == cartModel.id && p.userId == userId);
+                jm.status = isSuccess;
+                jm.msg = jm.status ? GlobalConstVars.DeleteSuccess : GlobalConstVars.DeleteFailure;
+            }
+            else
+            {
+               
+                var outData = await Add(userId, cartModel.productId, nums, numType, type);
+
+                jm.status = outData.status;
+                jm.msg = jm.status ? GlobalConstVars.SetDataSuccess : GlobalConstVars.SetDataFailure;
+                jm.otherData = outData;
+            }
+            
+
+            var cartDtoData = await GetCartDtoData(userId);
+            var cartDto = cartDtoData.data as CartDto;
+            var cartEntity = cartDto.list.Where(q => q.good.goodsCategoryId == cid);
+            if (cartEntity != null)
+            {
+                jm.data = cartEntity.Sum(q => q.nums);
+            }
+
+            
+            
 
             return jm;
         }
